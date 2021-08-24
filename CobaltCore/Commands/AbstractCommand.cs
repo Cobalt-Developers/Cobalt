@@ -93,7 +93,7 @@ namespace CobaltCore.Commands
 
         public string GetHelpMessage()
         {
-            var command = Manager.GetCommands()[0];
+            var command = Manager.GetBaseCommands()[0];
             var primarySubcommands = subcommands.Select(s => s[0]).ToArray();
             return $"/{command} {string.Join(" ", primarySubcommands)}";
         }

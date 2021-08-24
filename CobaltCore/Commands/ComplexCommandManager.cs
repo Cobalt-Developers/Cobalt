@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CobaltCore.Commands.Predefined;
 using TShockAPI;
 
 namespace CobaltCore.Commands
@@ -8,18 +9,21 @@ namespace CobaltCore.Commands
         private string[] baseCommands;
         private List<AbstractCommand> subCommands = new List<AbstractCommand>();
         
+        private HelpCommand helpCommand;
+        
         public ComplexCommandManager(CobaltPlugin plugin, string[] baseCommands) : base(plugin)
         {
             this.baseCommands = baseCommands;
+            helpCommand = new HelpCommand(Plugin, this);
+            subCommands.Add(helpCommand);
         }
 
         public override void OnCommand(CommandArgs args)
         {
             if (args.Parameters.Count == 0)
             {
-                // Only Base Command
-                // TODO: Display help
-                args.Player.SendInfoMessage("display help");
+                // Display help (page 0)
+                helpCommand.PreExecute(args);
                 return;
             }
 
@@ -29,8 +33,8 @@ namespace CobaltCore.Commands
                 if (command.TryCommand(args)) return;
             }
 
-            // TODO: Display Help
-            args.Player.SendInfoMessage("possible help?");
+            // Display help (all pages)
+            helpCommand.PreExecute(args);
         }
 
         public void AddCommand(AbstractCommand command)
@@ -38,9 +42,14 @@ namespace CobaltCore.Commands
             subCommands.Add(command);
         }
         
-        public override string[] GetCommands()
+        public override string[] GetBaseCommands()
         {
             return baseCommands;
+        }
+        
+        public override AbstractCommand[] GetCommands()
+        {
+            return subCommands.ToArray();
         }
     }
 }

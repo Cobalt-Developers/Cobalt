@@ -8,7 +8,7 @@ namespace CobaltCore.Attributes
         public string[] Commands { get; }
         public Type[] Handlers { get; } // TODO: restrict to only CommandHandlers
 
-        public CommandHandler(string[] commands, Type[] handlers)
+        public CommandHandler(string[] commands, params Type[] handlers)
         {
             Commands = commands;
             Handlers = handlers;

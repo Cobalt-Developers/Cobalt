@@ -7,7 +7,7 @@ namespace CobaltCore.Attributes
     {
         public string[] Names { get; }
 
-        public SubCommand(string[] names)
+        public SubCommand(params string[] names)
         {
             Names = names;
         }

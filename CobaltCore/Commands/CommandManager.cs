@@ -4,7 +4,7 @@ namespace CobaltCore.Commands
 {
     public abstract class CommandManager
     {
-        private CobaltPlugin Plugin { get; }
+        protected CobaltPlugin Plugin { get; }
 
         protected CommandManager(CobaltPlugin plugin)
         {
@@ -13,6 +13,8 @@ namespace CobaltCore.Commands
 
         public abstract void OnCommand(CommandArgs args);
 
-        public abstract string[] GetCommands();
+        public abstract string[] GetBaseCommands();
+
+        public abstract AbstractCommand[] GetCommands();
     }
 }

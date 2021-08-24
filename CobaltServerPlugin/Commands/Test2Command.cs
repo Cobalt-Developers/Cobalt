@@ -8,7 +8,7 @@ using TShockAPI;
 
 namespace CobaltServerPlugin.Commands
 {
-    [SubCommand(new []{"bla"})]
+    [SubCommand("bla")]
     public class Test2Command : AbstractCommand
     {
         public Test2Command(CobaltPlugin plugin, CommandManager manager) : base(plugin, manager)

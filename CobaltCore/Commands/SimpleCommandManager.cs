@@ -32,9 +32,14 @@ namespace CobaltCore.Commands
             args.Player.SendErrorMessage(command.GetHelpMessage());
         }
 
-        public override string[] GetCommands()
+        public override string[] GetBaseCommands()
         {
             return baseCommands;
+        }
+        
+        public override AbstractCommand[] GetCommands()
+        {
+            return new []{command};
         }
     }
 }

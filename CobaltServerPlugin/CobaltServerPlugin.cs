@@ -12,9 +12,9 @@ using TerrariaApi.Server;
 
 namespace CobaltServerPlugin
 {
-    [CommandHandler(new[]{"pl", "plugins"}, new[]{typeof(ListPluginsCommand)})]
-    [CommandHandler(new[]{"test"}, new[]{typeof(TestCommand)})]
-    [CommandHandler(new[]{"test2"}, new[]{typeof(Test2Command), typeof(Test3Command)})]
+    [CommandHandler(new[]{"pl", "plugins"}, typeof(ListPluginsCommand))]
+    [CommandHandler(new[]{"test"}, typeof(TestCommand))]
+    [CommandHandler(new[]{"test2"}, typeof(Test2Command), typeof(Test3Command))]
     [ApiVersion(2, 1)]
     public class CobaltServerPlugin : CobaltPlugin
     {
