@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using CobaltCore.Attributes;
+using CobaltCore.Commands.Arguments;
 using Terraria;
 using TShockAPI;
-using Permission = CobaltCore.Attributes.Permission;
 
 namespace CobaltCore.Commands
 {
@@ -28,25 +28,25 @@ namespace CobaltCore.Commands
 
         private void ParseAttributes()
         {
-            SubCommand[] subcommandAttributes = (SubCommand[]) Attribute.GetCustomAttributes(GetType(), typeof(SubCommand));
+            SubCommandAttribute[] subcommandAttributes = (SubCommandAttribute[]) System.Attribute.GetCustomAttributes(GetType(), typeof(SubCommandAttribute));
             foreach (var attribute in subcommandAttributes)
             {
                 subcommands.Add(attribute.Names);
             }
             
-            Argument[] argumentAttributes = (Argument[]) Attribute.GetCustomAttributes(GetType(), typeof(Argument));
+            ArgumentAttribute[] argumentAttributes = (ArgumentAttribute[]) System.Attribute.GetCustomAttributes(GetType(), typeof(ArgumentAttribute));
             foreach (var attribute in argumentAttributes)
             {
-                arguments.Add(new ArgumentI(Plugin, attribute.Placeholder, attribute.Optional));
+                arguments.Add(new ArgumentI(Plugin, attribute.Placeholder, attribute.Optional, attribute.Constraint));
             }
             
-            Permission[] permissionAttributes = (Permission[]) Attribute.GetCustomAttributes(GetType(), typeof(Permission));
+            PermissionAttribute[] permissionAttributes = (PermissionAttribute[]) System.Attribute.GetCustomAttributes(GetType(), typeof(PermissionAttribute));
             foreach (var attribute in permissionAttributes)
             {
                 permissions.Add(attribute.Name);
             }
             
-            if (Attribute.GetCustomAttribute(GetType(), typeof(IngameCommand)) != null)
+            if (System.Attribute.GetCustomAttribute(GetType(), typeof(IngameCommandAttribute)) != null)
             {
                 isIngameCommandOnly = true;
             }
@@ -78,12 +78,14 @@ namespace CobaltCore.Commands
                 return;
             }
 
-            if (!HasMatchingArguments(args.Parameters))
+            if (!HasRequiredArgumentSize(args.Parameters))
             {
                 args.Player.SendErrorMessage("Invalid arguments. Try that:");
                 args.Player.SendErrorMessage(GetHelpMessage());
                 return;
             }
+            
+            if (!TestArgumentConditions(args.Player, args.Parameters)) return;
 
             Execute(args);
         }
@@ -106,8 +108,13 @@ namespace CobaltCore.Commands
             return !subcommands.Where((t, i) => !t
                 .Any(n => n.Equals(args[i], StringComparison.OrdinalIgnoreCase))).Any();
         }
-        
-        private bool HasMatchingArguments(List<string> args)
+
+        private bool TestArgumentConditions(TSPlayer argsPlayer, List<string> args)
+        {
+            return !arguments.Where((argument, i) => !argument.TestArgumentOrError(argsPlayer, args[i])).Any();
+        }
+
+        private bool HasRequiredArgumentSize(List<string> args)
         {
             var requiredArgumentSize = GetRequiredArgumentSize();
             return args.Count >= requiredArgumentSize;

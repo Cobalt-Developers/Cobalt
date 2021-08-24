@@ -3,11 +3,11 @@
 namespace CobaltCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class SubCommand : System.Attribute
+    public class SubCommandAttribute : Attribute
     {
         public string[] Names { get; }
 
-        public SubCommand(params string[] names)
+        public SubCommandAttribute(params string[] names)
         {
             Names = names;
         }

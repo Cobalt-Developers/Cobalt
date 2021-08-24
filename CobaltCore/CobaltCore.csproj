@@ -47,14 +47,17 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Attributes\Argument.cs" />
-        <Compile Include="Attributes\CommandHandler.cs" />
-        <Compile Include="Attributes\IngameCommand.cs" />
-        <Compile Include="Attributes\Permission.cs" />
-        <Compile Include="Attributes\SubCommand.cs" />
+        <Compile Include="Attributes\ArgumentAttribute.cs" />
+        <Compile Include="Attributes\CommandHandlerAttribute.cs" />
+        <Compile Include="Attributes\IngameCommandAttribute.cs" />
+        <Compile Include="Attributes\PermissionAttribute.cs" />
+        <Compile Include="Attributes\SubCommandAttribute.cs" />
         <Compile Include="CobaltPlugin.cs" />
         <Compile Include="Commands\AbstractCommand.cs" />
-        <Compile Include="Commands\ArgumentI.cs" />
+        <Compile Include="Commands\Arguments\ArgumentConstraint.cs" />
+        <Compile Include="Commands\Arguments\ArgumentI.cs" />
+        <Compile Include="Commands\Arguments\IntegerConstraint.cs" />
+        <Compile Include="Commands\Arguments\LengthConstraint.cs" />
         <Compile Include="Commands\CommandManager.cs" />
         <Compile Include="Commands\ComplexCommandManager.cs" />
         <Compile Include="Commands\Predefined\HelpCommand.cs" />

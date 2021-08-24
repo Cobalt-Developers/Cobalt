@@ -6,6 +6,7 @@ using CobaltCore.Attributes;
 using CobaltCore.Commands;
 using CobaltCore.Messages;
 using TShockAPI;
+using Attribute = System.Attribute;
 
 namespace CobaltCore.Services.Commands
 {
@@ -19,7 +20,7 @@ namespace CobaltCore.Services.Commands
 
         public override void Init()
         {
-            var handlers = (CommandHandler[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(CommandHandler));
+            var handlers = (CommandHandlerAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(CommandHandlerAttribute));
 
             foreach (var handler in handlers)
             {

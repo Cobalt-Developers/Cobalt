@@ -3,11 +3,11 @@
 namespace CobaltCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class Permission : System.Attribute
+    public class PermissionAttribute : Attribute
     {
         public string Name { get; }
 
-        public Permission(string name)
+        public PermissionAttribute(string name)
         {
             Name = name;
         }

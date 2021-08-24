@@ -3,7 +3,7 @@
 namespace CobaltCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class IngameCommand : System.Attribute
+    public class IngameCommandAttribute : Attribute
     {
     }
 }
