@@ -47,12 +47,14 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Attributes\Argument.cs" />
         <Compile Include="Attributes\CommandHandler.cs" />
         <Compile Include="Attributes\IngameCommand.cs" />
         <Compile Include="Attributes\Permission.cs" />
         <Compile Include="Attributes\SubCommand.cs" />
         <Compile Include="CobaltPlugin.cs" />
         <Compile Include="Commands\AbstractCommand.cs" />
+        <Compile Include="Commands\ArgumentI.cs" />
         <Compile Include="Commands\CommandManager.cs" />
         <Compile Include="Commands\ComplexCommandManager.cs" />
         <Compile Include="Commands\Predefined\HelpCommand.cs" />
