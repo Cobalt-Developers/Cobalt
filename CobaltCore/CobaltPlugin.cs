@@ -4,6 +4,7 @@ using CobaltCore.Exceptions;
 using CobaltCore.Messages;
 using CobaltCore.Services;
 using CobaltCore.Services.Commands;
+using Microsoft.Xna.Framework;
 using Terraria;
 using TerrariaApi.Server;
 
@@ -12,6 +13,8 @@ namespace CobaltCore
     public abstract class CobaltPlugin: TerrariaPlugin
     {
         public ServiceManager ServiceManager { get; private set; }
+
+        public abstract ColorScheme ColorScheme { get; }
         
         protected CobaltPlugin(Main game) : base(game)
         {
@@ -26,6 +29,13 @@ namespace CobaltCore
                 return;
             }
 
+            if (ColorScheme == null)
+            {
+                Log(LogLevel.VERBOSE, "ColorScheme not set! Please define a ColorScheme.");
+                Disable();
+                return;
+            }
+
             ServiceManager = new ServiceManager(this);
             try
             {
@@ -36,6 +46,7 @@ namespace CobaltCore
                 if (!(e is ServiceInitException) && !(e is ServiceAlreadyExistsException)) throw;
                 Log(LogLevel.VERBOSE, "Loading services failed");
                 Disable(e);
+                return;
             }
             
             try {
@@ -55,8 +66,16 @@ namespace CobaltCore
         
         public void Disable(Exception exception)
         {
-            // TODO: implement
-            throw exception;
+            Log(LogLevel.VERBOSE, "Disabling plugin with the following exception:");
+            Log(LogLevel.VERBOSE, exception.ToString());
+            //ToDo disable
+            Enabled = false;
+        }
+        
+        public void Disable()
+        {
+            Log(LogLevel.VERBOSE, "Disabling plugin...");
+            Enabled = false;
         }
 
         public void Log(String message)

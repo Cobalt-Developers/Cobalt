@@ -73,6 +73,7 @@
         <Compile Include="Helpers\CombatTextHelper.cs" />
         <Compile Include="Helpers\EmoteBubbleHelper.cs" />
         <Compile Include="Helpers\OrderedDictionary.cs" />
+        <Compile Include="Messages\ColorScheme.cs" />
         <Compile Include="Messages\LogLevel.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Services\AbstractService.cs" />
