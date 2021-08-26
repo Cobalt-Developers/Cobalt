@@ -65,6 +65,9 @@
         <Compile Include="Exceptions\ServiceAlreadyExistsException.cs" />
         <Compile Include="Exceptions\ServiceInitException.cs" />
         <Compile Include="Exceptions\UnknownServiceException.cs" />
+        <Compile Include="Helpers\ColorHelper.cs" />
+        <Compile Include="Helpers\CombatTextHelper.cs" />
+        <Compile Include="Helpers\EmoteBubbleHelper.cs" />
         <Compile Include="Helpers\OrderedDictionary.cs" />
         <Compile Include="Messages\LogLevel.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
