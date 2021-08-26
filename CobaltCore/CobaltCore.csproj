@@ -49,6 +49,7 @@
     <ItemGroup>
         <Compile Include="Attributes\ArgumentAttribute.cs" />
         <Compile Include="Attributes\CommandHandlerAttribute.cs" />
+        <Compile Include="Attributes\DescriptionAttribute.cs" />
         <Compile Include="Attributes\IngameCommandAttribute.cs" />
         <Compile Include="Attributes\PermissionAttribute.cs" />
         <Compile Include="Attributes\SubCommandAttribute.cs" />

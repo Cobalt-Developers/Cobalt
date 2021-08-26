@@ -4,6 +4,7 @@ using TShockAPI;
 
 namespace CobaltCore.Commands.Predefined
 {
+    [Description("Displays info about the plugin")]
     [SubCommand("version", "v")]
     public class VersionCommand: AbstractCommand
     {

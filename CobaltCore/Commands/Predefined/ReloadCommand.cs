@@ -4,6 +4,7 @@ using TShockAPI;
 
 namespace CobaltCore.Commands.Predefined
 {
+    [Description("Reloads parts of the plugin")]
     [SubCommand("reload", "rl")]
     public class ReloadCommand : AbstractCommand
     {

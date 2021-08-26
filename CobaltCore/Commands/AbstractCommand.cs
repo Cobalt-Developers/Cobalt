@@ -13,7 +13,8 @@ namespace CobaltCore.Commands
         protected CobaltPlugin Plugin { get; }
         
         public CommandManager Manager { get; }
-
+        public string Description { get; private set; }
+        
         private List<string[]> subcommands = new List<string[]>();
         private List<ArgumentI> arguments = new List<ArgumentI>();
         private List<string> permissions = new List<string>();
@@ -28,6 +29,9 @@ namespace CobaltCore.Commands
 
         private void ParseAttributes()
         {
+            DescriptionAttribute descriptionAttribute = (DescriptionAttribute) Attribute.GetCustomAttribute(GetType(), typeof(DescriptionAttribute));
+            Description = descriptionAttribute != null ? descriptionAttribute.Description : "Does stuff.";
+            
             SubCommandAttribute[] subcommandAttributes = (SubCommandAttribute[]) System.Attribute.GetCustomAttributes(GetType(), typeof(SubCommandAttribute));
             foreach (var attribute in subcommandAttributes)
             {

@@ -6,6 +6,7 @@ using TShockAPI;
 
 namespace CobaltCore.Commands.Predefined
 {
+    [Description("Lists all associated commands")]
     [SubCommand("commands", "command", "cmd")]
     public class CommandListCommand : AbstractCommand
     {

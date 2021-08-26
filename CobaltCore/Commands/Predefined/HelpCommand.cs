@@ -5,6 +5,7 @@ using TShockAPI;
 
 namespace CobaltCore.Commands.Predefined
 {
+    [Description("Displays command help")]
     [SubCommand("help")]
     public class HelpCommand : AbstractCommand
     { 
@@ -33,7 +34,7 @@ namespace CobaltCore.Commands.Predefined
 
         private List<string> GetHelpMessages(TSPlayer argsPlayer)
         {
-            return GetCommands(argsPlayer).Select(c => c.GetHelpMessage()).ToList();
+            return GetCommands(argsPlayer).Select(c => $"{c.GetHelpMessage()} : {c.Description}").ToList();
         }
         
         private List<AbstractCommand> GetCommands(TSPlayer argsPlayer)
