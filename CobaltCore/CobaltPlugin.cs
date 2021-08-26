@@ -1,4 +1,5 @@
 ﻿using System;
+using CobaltCore.Commands;
 using CobaltCore.Exceptions;
 using CobaltCore.Messages;
 using CobaltCore.Services;
@@ -10,7 +11,7 @@ namespace CobaltCore
 {
     public abstract class CobaltPlugin: TerrariaPlugin
     {
-        private ServiceManager ServiceManager { get; set; }
+        public ServiceManager ServiceManager { get; private set; }
         
         protected CobaltPlugin(Main game) : base(game)
         {
@@ -90,6 +91,15 @@ namespace CobaltCore
         public string GetPluginPrefix()
         {
             return $"[{Name}]";
+        }
+
+        /**
+         * Services
+         */
+
+        public CommandService GetCommandService()
+        {
+            return (CommandService) ServiceManager.GetService<CommandService>();
         }
     }
 }

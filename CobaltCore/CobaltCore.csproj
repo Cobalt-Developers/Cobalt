@@ -60,7 +60,10 @@
         <Compile Include="Commands\Arguments\LengthConstraint.cs" />
         <Compile Include="Commands\CommandManager.cs" />
         <Compile Include="Commands\ComplexCommandManager.cs" />
+        <Compile Include="Commands\Predefined\CommandListCommand.cs" />
         <Compile Include="Commands\Predefined\HelpCommand.cs" />
+        <Compile Include="Commands\Predefined\ReloadCommand.cs" />
+        <Compile Include="Commands\Predefined\VersionCommand.cs" />
         <Compile Include="Commands\SimpleCommandManager.cs" />
         <Compile Include="Exceptions\ServiceAlreadyExistsException.cs" />
         <Compile Include="Exceptions\ServiceInitException.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using CobaltCore.Attributes;
 using CobaltCore.Commands;
+using CobaltCore.Commands.Predefined;
 using CobaltCore.Messages;
 using TShockAPI;
 using Attribute = System.Attribute;
@@ -12,7 +13,7 @@ namespace CobaltCore.Services.Commands
 {
     public class CommandService : AbstractService
     {
-        private List<CommandManager> commandManagers = new List<CommandManager>();
+        public List<CommandManager> CommandManagers { get; } = new List<CommandManager>();
 
         public CommandService(CobaltPlugin plugin) : base(plugin)
         {
@@ -20,7 +21,17 @@ namespace CobaltCore.Services.Commands
 
         public override void Init()
         {
-            var handlers = (CommandHandlerAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(CommandHandlerAttribute));
+            // Add predefined plugin commands
+            string pluginCommand = Plugin.Name.ToLower();
+            ComplexCommandManager pluginCommandManager = new ComplexCommandManager(Plugin, new[] {pluginCommand});
+            pluginCommandManager.AddCommand(new VersionCommand(Plugin, pluginCommandManager));
+            pluginCommandManager.AddCommand(new CommandListCommand(Plugin, pluginCommandManager));
+            pluginCommandManager.AddCommand(new ReloadCommand(Plugin, pluginCommandManager));
+            TShockAPI.Commands.ChatCommands.Add(new Command(pluginCommandManager.OnCommand, pluginCommand));
+            CommandManagers.Add(pluginCommandManager);
+            
+            // Add custom commands
+            CommandHandlerAttribute[] handlers = (CommandHandlerAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(CommandHandlerAttribute));
 
             foreach (var handler in handlers)
             {
@@ -40,6 +51,8 @@ namespace CobaltCore.Services.Commands
                 Plugin.Log(LogLevel.VERBOSE,"CommandService: Not registering (no command assigned)");
                 return;
             }
+
+            commands = commands.Select(c => c.ToLower()).ToArray();
             
             if (handlers == null || handlers.Length == 0)
             {
@@ -68,7 +81,7 @@ namespace CobaltCore.Services.Commands
 
             TShockAPI.Commands.ChatCommands.Add(new Command(commandManager.OnCommand, commands));
             
-            commandManagers.Add(commandManager);
+            CommandManagers.Add(commandManager);
         }
     }
 }

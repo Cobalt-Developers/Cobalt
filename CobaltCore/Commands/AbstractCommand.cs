@@ -10,7 +10,7 @@ namespace CobaltCore.Commands
 {
     public abstract class AbstractCommand
     {
-        private CobaltPlugin Plugin { get; }
+        protected CobaltPlugin Plugin { get; }
         
         public CommandManager Manager { get; }
 
