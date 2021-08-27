@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
+using CobaltCore.Attributes;
 using CobaltCore.Exceptions;
 using CobaltCore.Helpers;
+using CobaltCore.Messages;
+using TShockAPI;
 
 namespace CobaltCore.Services
 {
@@ -18,27 +21,54 @@ namespace CobaltCore.Services
 
         public bool Exists<T>() where T : AbstractService
         {
-            return services.Contains(typeof(T));
+            return Exists(typeof(T));
         }
         
+        private bool Exists(Type serviceType)
+        {
+            return services.Contains(serviceType);
+        }
+
+        public void RegisterCustomServices()
+        {
+            try
+            {
+                ServiceAttribute[] attributes =
+                    (ServiceAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(ServiceAttribute));
+                attributes.ForEach(attribute =>
+                {
+                    Plugin.Log("Registering custom service " + attribute.Value.Name);
+                    RegisterService(attribute.Value);
+                });
+            }
+            catch (ServiceAlreadyExistsException e)
+            {
+                throw new ServiceInitException(e.Message);
+            }
+        }
+
         public void RegisterService<T>() where T : AbstractService
         {
             if (Exists<T>())
             {
                 throw new ServiceAlreadyExistsException($"The Service '{typeof(T).Name}' is already existing.");
             }
-
+            RegisterService(typeof(T));
+        }
+        
+        private void RegisterService(Type serviceType)
+        {
             AbstractService service;
             try
             {
-                service = (T) Activator.CreateInstance(typeof(T), Plugin);
+                service = (AbstractService) Activator.CreateInstance(serviceType, Plugin);
             }
             catch (Exception e)
             {
                 throw new ServiceInitException("Service creation failed.", e);
             }
             service.Init();
-            services.Add(typeof(T), service);
+            services.Add(serviceType, service);
         }
 
         public AbstractService GetService<T>() where T : AbstractService

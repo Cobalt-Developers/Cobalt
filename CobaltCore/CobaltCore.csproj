@@ -52,6 +52,7 @@
         <Compile Include="Attributes\DescriptionAttribute.cs" />
         <Compile Include="Attributes\IngameCommandAttribute.cs" />
         <Compile Include="Attributes\PermissionAttribute.cs" />
+        <Compile Include="Attributes\ServiceAttribute.cs" />
         <Compile Include="Attributes\SubCommandAttribute.cs" />
         <Compile Include="CobaltPlugin.cs" />
         <Compile Include="Commands\AbstractCommand.cs" />

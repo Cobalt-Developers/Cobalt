@@ -40,6 +40,7 @@ namespace CobaltCore
             try
             {
                 ServiceManager.RegisterService<CommandService>();
+                ServiceManager.RegisterCustomServices();
             }
             catch (Exception e)
             {
