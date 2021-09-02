@@ -2,20 +2,20 @@
 
 namespace CobaltCore.Commands.Arguments
 {
-    public class IntegerConstraint : ArgumentConstraint
+    public class NumberConstraint : ArgumentConstraint
     {
-        private readonly int lowerLimit;
-        private readonly int upperLimit;
+        private readonly long lowerLimit;
+        private readonly long upperLimit;
 
-        public IntegerConstraint()
+        public NumberConstraint()
         {
             lowerLimit = int.MinValue;
             upperLimit = int.MaxValue;
         }
 
-        public IntegerConstraint(int lowerLimit, int upperLimit)
+        public NumberConstraint(long lowerLimit, long upperLimit)
         {
-            if (upperLimit > lowerLimit) throw new ArgumentException("lowerValue is higher than upperValue");
+            if (upperLimit < lowerLimit) throw new ArgumentException("lowerValue is higher than upperValue");
             
             this.lowerLimit = lowerLimit;
             this.upperLimit = upperLimit;
@@ -23,7 +23,7 @@ namespace CobaltCore.Commands.Arguments
 
         public override bool IsSatisfied(string input)
         {
-            if (!int.TryParse(input, out var parsed)) return false;
+            if (!long.TryParse(input, out var parsed)) return false;
             return parsed >= lowerLimit && parsed <= upperLimit;
         }
 
