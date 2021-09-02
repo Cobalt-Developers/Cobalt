@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CobaltServerPlugin", "Cobal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CobaltCore", "CobaltCore\CobaltCore.csproj", "{EA0A0332-11E8-46C1-BCC8-9346E8FF5FE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banking", "Banking\Banking.csproj", "{B6447555-6175-4E75-8D4C-91279F6BAEAF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +18,5 @@ Global
 		{EA0A0332-11E8-46C1-BCC8-9346E8FF5FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA0A0332-11E8-46C1-BCC8-9346E8FF5FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA0A0332-11E8-46C1-BCC8-9346E8FF5FE4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6447555-6175-4E75-8D4C-91279F6BAEAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6447555-6175-4E75-8D4C-91279F6BAEAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6447555-6175-4E75-8D4C-91279F6BAEAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6447555-6175-4E75-8D4C-91279F6BAEAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

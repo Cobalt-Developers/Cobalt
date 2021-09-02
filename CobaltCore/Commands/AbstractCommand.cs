@@ -91,7 +91,14 @@ namespace CobaltCore.Commands
             
             if (!TestArgumentConditions(args.Player, args.Parameters)) return;
 
-            Execute(args);
+            try
+            {
+                Execute(args);
+            }
+            catch (NotImplementedException e)
+            {
+                args.Player.SendErrorMessage("This command was not implemented yet. Please contact the plugin developer.");
+            }
         }
         
         public bool HasPermission(TSPlayer player)
@@ -115,7 +122,8 @@ namespace CobaltCore.Commands
 
         private bool TestArgumentConditions(TSPlayer argsPlayer, List<string> args)
         {
-            return !arguments.Where((argument, i) => !argument.TestArgumentOrError(argsPlayer, args[i])).Any();
+            var relevantArgs = args.GetRange(0, Math.Min(args.Count, arguments.Count));
+            return !relevantArgs.Where((arg, i) => !arguments[i].TestArgumentOrError(argsPlayer, arg)).Any();
         }
 
         private bool HasRequiredArgumentSize(List<string> args)

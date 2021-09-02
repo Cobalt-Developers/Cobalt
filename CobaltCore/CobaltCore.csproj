@@ -58,7 +58,7 @@
         <Compile Include="Commands\AbstractCommand.cs" />
         <Compile Include="Commands\Arguments\ArgumentConstraint.cs" />
         <Compile Include="Commands\Arguments\ArgumentI.cs" />
-        <Compile Include="Commands\Arguments\IntegerConstraint.cs" />
+        <Compile Include="Commands\Arguments\NumberConstraint.cs" />
         <Compile Include="Commands\Arguments\LengthConstraint.cs" />
         <Compile Include="Commands\CommandManager.cs" />
         <Compile Include="Commands\ComplexCommandManager.cs" />
