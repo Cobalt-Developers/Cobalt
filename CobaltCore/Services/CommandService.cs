@@ -9,7 +9,7 @@ using CobaltCore.Messages;
 using TShockAPI;
 using Attribute = System.Attribute;
 
-namespace CobaltCore.Services.Commands
+namespace CobaltCore.Services
 {
     public class CommandService : AbstractService
     {

@@ -4,7 +4,6 @@ using CobaltCore.Commands;
 using CobaltCore.Exceptions;
 using CobaltCore.Messages;
 using CobaltCore.Services;
-using CobaltCore.Services.Commands;
 using CobaltCore.Storages.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -126,6 +125,11 @@ namespace CobaltCore
          * Services
          */
 
+        public ConfigService GetConfigService()
+        {
+            return (ConfigService) ServiceManager.GetService<ConfigService>();
+        }
+        
         public CommandService GetCommandService()
         {
             return (CommandService) ServiceManager.GetService<CommandService>();

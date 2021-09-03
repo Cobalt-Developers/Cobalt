@@ -5,14 +5,15 @@ using CobaltCore.Attributes;
 using CobaltCore.Exceptions;
 using CobaltCore.Messages;
 using CobaltCore.Services;
+using CobaltCore.Storages.Configs;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace CobaltCore.Storages.Configs
+namespace CobaltCore.Services
 {
     public class ConfigService : AbstractService
     {
-        private Dictionary<Type, Configuration> configFiles;
+        private Dictionary<Type, ConfigurationFile> configFiles;
 
         public ConfigService(CobaltPlugin plugin) : base(plugin)
         {
@@ -22,7 +23,7 @@ namespace CobaltCore.Storages.Configs
         {
             CreateDataFolder();
             
-            configFiles = new Dictionary<Type, Configuration>();
+            configFiles = new Dictionary<Type, ConfigurationFile>();
             
             ConfigurationAttribute[] attributes = (ConfigurationAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(ConfigurationAttribute));
             foreach (var attribute in attributes)
@@ -36,22 +37,18 @@ namespace CobaltCore.Storages.Configs
             Init();
         }
 
-        public Configuration GetConfig<T>() where T : ConfigurationFile
+        public T GetConfig<T>() where T : ConfigurationFile
         {
-            return GetConfig(typeof(T));
+            return (T) GetConfig(typeof(T));
         }
         
-        public Configuration GetConfig(Type configType)
+        public ConfigurationFile GetConfig(Type configType)
         {
             if (!configType.IsSubclassOf(typeof(ConfigurationFile)))
             {
                 throw new InvalidClassTypeException(configType, typeof(ConfigurationFile));
             }
-            if (IsConfigExisting(configType))
-            {
-                return null;
-            }
-            return configFiles[configType];
+            return !IsConfigExisting(configType) ? null : configFiles[configType];
         }
 
         public bool IsConfigExisting<T>() where T : ConfigurationFile
@@ -71,10 +68,18 @@ namespace CobaltCore.Storages.Configs
 
         public void AddConfig(Type configType)
         {
-            RegisterConfig(configType, Configuration.Create(Plugin, configType));
+            try
+            {
+                RegisterConfig(configType, ConfigurationFile.Create(Plugin, configType));
+            }
+            catch (ConfigInitException e)
+            {
+                Plugin.Log(LogLevel.VERBOSE, "Configuration initialization failed:");
+                Plugin.Log(LogLevel.VERBOSE, e.Message);
+            }
         }
 
-        private void RegisterConfig(Type configType, Configuration configFile)
+        private void RegisterConfig(Type configType, ConfigurationFile configFile)
         {
             configFiles.Add(configType, configFile);
         }
