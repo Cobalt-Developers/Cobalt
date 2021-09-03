@@ -45,10 +45,16 @@
         <Reference Include="TShockAPI, Version=4.5.5.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\TShock\TShockAPI\bin\Debug\TShockAPI.dll</HintPath>
         </Reference>
+        <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e">
+          <HintPath>..\packages\YamlDotNet.11.2.1\lib\net45\YamlDotNet.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Attributes\ArgumentAttribute.cs" />
         <Compile Include="Attributes\CommandHandlerAttribute.cs" />
+        <Compile Include="Attributes\ConfigurationAttribute.cs" />
+        <Compile Include="Attributes\ConfigurationFileAttribute.cs" />
         <Compile Include="Attributes\DescriptionAttribute.cs" />
         <Compile Include="Attributes\IngameCommandAttribute.cs" />
         <Compile Include="Attributes\PermissionAttribute.cs" />
@@ -67,6 +73,8 @@
         <Compile Include="Commands\Predefined\ReloadCommand.cs" />
         <Compile Include="Commands\Predefined\VersionCommand.cs" />
         <Compile Include="Commands\SimpleCommandManager.cs" />
+        <Compile Include="Exceptions\ConfigInitException.cs" />
+        <Compile Include="Exceptions\InvalidClassTypeException.cs" />
         <Compile Include="Exceptions\ServiceAlreadyExistsException.cs" />
         <Compile Include="Exceptions\ServiceInitException.cs" />
         <Compile Include="Exceptions\UnknownServiceException.cs" />
@@ -80,6 +88,13 @@
         <Compile Include="Services\AbstractService.cs" />
         <Compile Include="Services\Commands\CommandService.cs" />
         <Compile Include="Services\ServiceManager.cs" />
+        <Compile Include="Storages\Configs\ConfigService.cs" />
+        <Compile Include="Storages\Configs\ConfigType.cs" />
+        <Compile Include="Storages\Configs\Configuration.cs" />
+        <Compile Include="Storages\Configs\ConfigurationFile.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

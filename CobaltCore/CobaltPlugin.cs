@@ -1,12 +1,15 @@
 ﻿using System;
+using System.IO;
 using CobaltCore.Commands;
 using CobaltCore.Exceptions;
 using CobaltCore.Messages;
 using CobaltCore.Services;
 using CobaltCore.Services.Commands;
+using CobaltCore.Storages.Configs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using TerrariaApi.Server;
+using TShockAPI;
 
 namespace CobaltCore
 {
@@ -39,6 +42,7 @@ namespace CobaltCore
             ServiceManager = new ServiceManager(this);
             try
             {
+                ServiceManager.RegisterService<ConfigService>();
                 ServiceManager.RegisterService<CommandService>();
                 ServiceManager.RegisterCustomServices();
             }
@@ -111,6 +115,11 @@ namespace CobaltCore
         public string GetPluginPrefix()
         {
             return $"[{Name}]";
+        }
+
+        public string GetDataFolderPath()
+        {
+            return Path.Combine(TShock.SavePath, Name);
         }
 
         /**
