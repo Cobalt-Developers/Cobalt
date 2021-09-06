@@ -42,6 +42,7 @@ namespace CobaltCore
             try
             {
                 ServiceManager.RegisterService<ConfigService>();
+                ServiceManager.RegisterService<SettingsService>();
                 ServiceManager.RegisterService<CommandService>();
                 ServiceManager.RegisterCustomServices();
             }
@@ -128,6 +129,11 @@ namespace CobaltCore
         public ConfigService GetConfigService()
         {
             return (ConfigService) ServiceManager.GetService<ConfigService>();
+        }
+        
+        public SettingsService GetSettingsService()
+        {
+            return (SettingsService) ServiceManager.GetService<SettingsService>();
         }
         
         public CommandService GetCommandService()

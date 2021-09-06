@@ -13,7 +13,7 @@ namespace CobaltCore.Services
 {
     public class ConfigService : AbstractService
     {
-        private Dictionary<Type, ConfigurationFile> configFiles;
+        private Dictionary<Type, Configuration> _configFiles;
 
         public ConfigService(CobaltPlugin plugin) : base(plugin)
         {
@@ -23,12 +23,12 @@ namespace CobaltCore.Services
         {
             CreateDataFolder();
             
-            configFiles = new Dictionary<Type, ConfigurationFile>();
+            _configFiles = new Dictionary<Type, Configuration>();
             
             ConfigurationAttribute[] attributes = (ConfigurationAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(ConfigurationAttribute));
             foreach (var attribute in attributes)
             {
-                AddConfig(attribute.ConfigType);
+                AddConfig(attribute.ImplType);
             }
         }
 
@@ -37,51 +37,26 @@ namespace CobaltCore.Services
             Init();
         }
 
-        public T GetConfig<T>() where T : ConfigurationFile
-        {
-            return (T) GetConfig(typeof(T));
-        }
+        /*
+         * Initialization
+         */
         
-        public ConfigurationFile GetConfig(Type configType)
-        {
-            if (!configType.IsSubclassOf(typeof(ConfigurationFile)))
-            {
-                throw new InvalidClassTypeException(configType, typeof(ConfigurationFile));
-            }
-            return !IsConfigExisting(configType) ? null : configFiles[configType];
-        }
-
-        public bool IsConfigExisting<T>() where T : ConfigurationFile
-        {
-            return IsConfigExisting(typeof(T));
-        }
-        
-        public bool IsConfigExisting(Type configType)
-        {
-            if (!configType.IsSubclassOf(typeof(ConfigurationFile)))
-            {
-                throw new InvalidClassTypeException(configType, typeof(ConfigurationFile));
-            }
-            
-            return configFiles.ContainsKey(configType);
-        }
-
         public void AddConfig(Type configType)
         {
             try
             {
-                RegisterConfig(configType, ConfigurationFile.Create(Plugin, configType));
+                RegisterConfig(configType, Configuration.Create(Plugin, configType));
             }
-            catch (ConfigInitException e)
+            catch (StorageInitException e)
             {
                 Plugin.Log(LogLevel.VERBOSE, "Configuration initialization failed:");
                 Plugin.Log(LogLevel.VERBOSE, e.Message);
             }
         }
 
-        private void RegisterConfig(Type configType, ConfigurationFile configFile)
+        private void RegisterConfig(Type configType, Configuration config)
         {
-            configFiles.Add(configType, configFile);
+            _configFiles.Add(configType, config);
         }
 
         private void CreateDataFolder()
@@ -91,6 +66,39 @@ namespace CobaltCore.Services
             {
                 Directory.CreateDirectory(path);
             }
+        }
+        
+        /*
+         * Interface Functions
+         */
+        
+        public T GetConfig<T>() where T : Configuration
+        {
+            return (T) GetConfig(typeof(T));
+        }
+        
+        public Configuration GetConfig(Type configType)
+        {
+            if (!configType.IsSubclassOf(typeof(Configuration)))
+            {
+                throw new InvalidClassTypeException(configType, typeof(Configuration));
+            }
+            return !IsConfigExisting(configType) ? null : _configFiles[configType];
+        }
+
+        public bool IsConfigExisting<T>() where T : Configuration
+        {
+            return IsConfigExisting(typeof(T));
+        }
+        
+        public bool IsConfigExisting(Type configType)
+        {
+            if (!configType.IsSubclassOf(typeof(Configuration)))
+            {
+                throw new InvalidClassTypeException(configType, typeof(Configuration));
+            }
+            
+            return _configFiles.ContainsKey(configType);
         }
     }
 }

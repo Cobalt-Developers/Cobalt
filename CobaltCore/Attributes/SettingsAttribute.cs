@@ -3,11 +3,11 @@
 namespace CobaltCore.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class ConfigurationAttribute : Attribute
+    public class SettingsAttribute : Attribute
     {
         public Type ImplType { get; }
 
-        public ConfigurationAttribute(Type implType)
+        public SettingsAttribute(Type implType)
         {
             ImplType = implType;
         }

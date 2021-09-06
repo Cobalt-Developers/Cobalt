@@ -54,11 +54,12 @@
         <Compile Include="Attributes\ArgumentAttribute.cs" />
         <Compile Include="Attributes\CommandHandlerAttribute.cs" />
         <Compile Include="Attributes\ConfigurationAttribute.cs" />
-        <Compile Include="Attributes\ConfigurationFileAttribute.cs" />
+        <Compile Include="Attributes\FileStorageAttribute.cs" />
         <Compile Include="Attributes\DescriptionAttribute.cs" />
         <Compile Include="Attributes\IngameCommandAttribute.cs" />
         <Compile Include="Attributes\PermissionAttribute.cs" />
         <Compile Include="Attributes\ServiceAttribute.cs" />
+        <Compile Include="Attributes\SettingsAttribute.cs" />
         <Compile Include="Attributes\SubCommandAttribute.cs" />
         <Compile Include="CobaltPlugin.cs" />
         <Compile Include="Commands\AbstractCommand.cs" />
@@ -73,7 +74,7 @@
         <Compile Include="Commands\Predefined\ReloadCommand.cs" />
         <Compile Include="Commands\Predefined\VersionCommand.cs" />
         <Compile Include="Commands\SimpleCommandManager.cs" />
-        <Compile Include="Exceptions\ConfigInitException.cs" />
+        <Compile Include="Exceptions\StorageInitException.cs" />
         <Compile Include="Exceptions\InvalidClassTypeException.cs" />
         <Compile Include="Exceptions\ServiceAlreadyExistsException.cs" />
         <Compile Include="Exceptions\ServiceInitException.cs" />
@@ -89,8 +90,12 @@
         <Compile Include="Services\CommandService.cs" />
         <Compile Include="Services\ConfigService.cs" />
         <Compile Include="Services\ServiceManager.cs" />
-        <Compile Include="Storages\Configs\ConfigType.cs" />
-        <Compile Include="Storages\Configs\ConfigurationFile.cs" />
+        <Compile Include="Services\SettingsService.cs" />
+        <Compile Include="Storages\Configs\Configuration.cs" />
+        <Compile Include="Storages\AbstractFileStorage.cs" />
+        <Compile Include="Storages\FileStorageType.cs" />
+        <Compile Include="Storages\Settings\Settings.cs" />
+        <Compile Include="Storages\Settings\SettingsManager.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

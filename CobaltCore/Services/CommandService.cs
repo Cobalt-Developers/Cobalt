@@ -44,7 +44,7 @@ namespace CobaltCore.Services
             // not supported
         }
 
-        private void AddCommandHandler(string[] commands, Type[] handlers) // TODO: restrict type
+        private void AddCommandHandler(string[] commands, Type[] handlers) // TODO: restrict Type
         {
             if (commands == null || commands.Length == 0)
             {
