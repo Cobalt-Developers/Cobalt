@@ -1,12 +1,10 @@
-﻿using CobaltCore.Commands;
-
-namespace CobaltCore.Services
+﻿namespace CobaltCore.Services
 {
     public abstract class AbstractService
     {
-        protected CobaltPlugin Plugin { get; }
+        protected ICobaltPlugin Plugin { get; }
 
-        protected AbstractService(CobaltPlugin plugin)
+        protected AbstractService(ICobaltPlugin plugin)
         {
             Plugin = plugin;
         }

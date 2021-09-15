@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using CobaltCore.Attributes;
 using CobaltCore.Commands.Arguments;
-using Terraria;
-using TShockAPI;
+using CobaltCore.Wrappers;
 
 namespace CobaltCore.Commands
 {
     public abstract class AbstractCommand
     {
-        protected CobaltPlugin Plugin { get; }
+        protected ICobaltPlugin Plugin { get; }
         
-        public CommandManager Manager { get; }
+        public AbstractCommandManager Manager { get; }
         public string Description { get; private set; }
         
         private List<string[]> subcommands = new List<string[]>();
@@ -20,7 +19,7 @@ namespace CobaltCore.Commands
         private List<string> permissions = new List<string>();
         private bool isIngameCommandOnly;
 
-        protected AbstractCommand(CobaltPlugin plugin, CommandManager manager)
+        protected AbstractCommand(ICobaltPlugin plugin, AbstractCommandManager manager)
         {
             Plugin = plugin;
             Manager = manager;
@@ -56,52 +55,52 @@ namespace CobaltCore.Commands
             }
         }
         
-        public abstract void Execute(CommandArgs args);
+        public abstract void Execute(ICobaltPlayer player, List<string> args, string message, bool silent);
 
-        public bool TryCommand(CommandArgs args)
+        public bool TryCommand(ICobaltPlayer player, List<string> args, string message, bool silent)
         {
-            if (!HasMatchingSubcommands(args.Parameters))
+            if (!HasMatchingSubcommands(args))
                 return false;
 
-            var realArguments = args.Parameters;
+            var realArguments = args;
             if(subcommands.Count > 0) realArguments.RemoveRange(0, subcommands.Count);
-            PreExecute(new CommandArgs(args.Message, args.Silent, args.Player, realArguments));
+            PreExecute(player, realArguments, message, silent);
             return true;
         }
-        public void PreExecute(CommandArgs args)
+        public void PreExecute(ICobaltPlayer player, List<string> args, string message, bool silent)
         {
             if (isIngameCommandOnly)
             {
-                args.Player.SendErrorMessage("You must be a real player to execute this command.");
+                player.SendErrorMessage("You must be a real player to execute this command.");
                 return;
             }
             
-            if (!HasPermission(args.Player))
+            if (!HasPermission(player))
             {
-                args.Player.SendErrorMessage("You do not have the necessary permission to execute this command.");
+                player.SendErrorMessage("You do not have the necessary permission to execute this command.");
                 return;
             }
 
-            if (!HasRequiredArgumentSize(args.Parameters))
+            if (!HasRequiredArgumentSize(args))
             {
-                args.Player.SendErrorMessage("Invalid arguments. Try that:");
-                args.Player.SendErrorMessage(GetHelpMessage());
+                player.SendErrorMessage("Invalid arguments. Try that:");
+                player.SendErrorMessage(GetHelpMessage());
                 return;
             }
             
-            if (!TestArgumentConditions(args.Player, args.Parameters)) return;
+            if (!TestArgumentConditions(player, args)) return;
 
             try
             {
-                Execute(args);
+                Execute(player, args, message, silent);
             }
             catch (NotImplementedException e)
             {
-                args.Player.SendErrorMessage("This command was not implemented yet. Please contact the plugin developer.");
+                player.SendErrorMessage("This command was not implemented yet. Please contact the plugin developer.");
             }
         }
         
-        public bool HasPermission(TSPlayer player)
+        public bool HasPermission(ICobaltPlayer player)
         {
             return GetPermissions().Count == 0 || permissions.All(player.HasPermission);
         }
@@ -120,7 +119,7 @@ namespace CobaltCore.Commands
                 .Any(n => n.Equals(args[i], StringComparison.OrdinalIgnoreCase))).Any();
         }
 
-        private bool TestArgumentConditions(TSPlayer argsPlayer, List<string> args)
+        private bool TestArgumentConditions(ICobaltPlayer argsPlayer, List<string> args)
         {
             var relevantArgs = args.GetRange(0, Math.Min(args.Count, arguments.Count));
             return !relevantArgs.Where((arg, i) => !arguments[i].TestArgumentOrError(argsPlayer, arg)).Any();

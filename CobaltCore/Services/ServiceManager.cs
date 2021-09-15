@@ -3,18 +3,16 @@ using System.Collections;
 using CobaltCore.Attributes;
 using CobaltCore.Exceptions;
 using CobaltCore.Helpers;
-using CobaltCore.Messages;
-using TShockAPI;
 
 namespace CobaltCore.Services
 {
     public class ServiceManager
     {
-        private CobaltPlugin Plugin { get; }
+        private ICobaltPlugin Plugin { get; }
 
         private OrderedDictionary<Type, AbstractService> services = new OrderedDictionary<Type, AbstractService>(); // TODO: restrict to only AbstractService
 
-        public ServiceManager(CobaltPlugin plugin)
+        public ServiceManager(ICobaltPlugin plugin)
         {
             Plugin = plugin;
         }
@@ -35,11 +33,11 @@ namespace CobaltCore.Services
             {
                 ServiceAttribute[] attributes =
                     (ServiceAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(ServiceAttribute));
-                attributes.ForEach(attribute =>
+                foreach (var attribute in attributes)
                 {
                     Plugin.Log("Registering custom service " + attribute.Value.Name);
                     RegisterService(attribute.Value);
-                });
+                }
             }
             catch (ServiceAlreadyExistsException e)
             {

@@ -1,4 +1,7 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=E_003A_005CDevelopment_005CTerraria_005Ctestserver_005CServerPlugins_005COTAPI_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=E_003A_005CDevelopment_005CTerraria_005Ctestserver_005CServerPlugins_005CTerrariaServer_002Eexe/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=E_003A_005CDevelopment_005CTerraria_005Ctestserver_005CServerPlugins_005CTShockAPI_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=E_003A_005CDevelopment_005CTerraria_005CTShock_005CTShockAPI_005Cbin_005CDebug_005COTAPI_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=E_003A_005CDevelopment_005CTerraria_005CTShock_005CTShockAPI_005Cbin_005CDebug_005CTerrariaServer_002Eexe/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=E_003A_005CDevelopment_005CTerraria_005CTShock_005CTShockAPI_005Cbin_005CDebug_005CTShockAPI_002Edll/@EntryIndexedValue">True</s:Boolean>

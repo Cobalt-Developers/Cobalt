@@ -6,16 +6,15 @@ using CobaltCore.Attributes;
 using CobaltCore.Commands;
 using CobaltCore.Commands.Predefined;
 using CobaltCore.Messages;
-using TShockAPI;
 using Attribute = System.Attribute;
 
 namespace CobaltCore.Services
 {
-    public class CommandService : AbstractService
+    public abstract class AbstractCommandService : AbstractService
     {
-        public List<CommandManager> CommandManagers { get; } = new List<CommandManager>();
+        public List<AbstractCommandManager> CommandManagers { get; } = new List<AbstractCommandManager>();
 
-        public CommandService(CobaltPlugin plugin) : base(plugin)
+        public AbstractCommandService(ICobaltPlugin plugin) : base(plugin)
         {
         }
 
@@ -23,11 +22,11 @@ namespace CobaltCore.Services
         {
             // Add predefined plugin commands
             string pluginCommand = Plugin.Name.ToLower();
-            ComplexCommandManager pluginCommandManager = new ComplexCommandManager(Plugin, new[] {pluginCommand});
+            AbstractComplexCommandManager pluginCommandManager = CreateComplexCommandManager(Plugin, new[] {pluginCommand});
             pluginCommandManager.AddCommand(new VersionCommand(Plugin, pluginCommandManager));
             pluginCommandManager.AddCommand(new CommandListCommand(Plugin, pluginCommandManager));
             pluginCommandManager.AddCommand(new ReloadCommand(Plugin, pluginCommandManager));
-            TShockAPI.Commands.ChatCommands.Add(new Command(pluginCommandManager.OnCommand, pluginCommand));
+            RegisterCommand(pluginCommandManager, pluginCommand);
             CommandManagers.Add(pluginCommandManager);
             
             // Add custom commands
@@ -48,7 +47,7 @@ namespace CobaltCore.Services
         {
             if (commands == null || commands.Length == 0)
             {
-                Plugin.Log(LogLevel.VERBOSE,"CommandService: Not registering (no command assigned)");
+                Plugin.Log(LogLevel.VERBOSE,"AbstractCommandService: Not registering (no command assigned)");
                 return;
             }
 
@@ -56,32 +55,37 @@ namespace CobaltCore.Services
             
             if (handlers == null || handlers.Length == 0)
             {
-                Plugin.Log(LogLevel.VERBOSE,$"CommandService: Not registering {commands[0]} (no handlers assigned)");
+                Plugin.Log(LogLevel.VERBOSE,$"AbstractCommandService: Not registering {commands[0]} (no handlers assigned)");
                 return;
             }
 
-            CommandManager commandManager;
+            AbstractCommandManager commandManager;
 
             if (handlers.Length == 1)
             {
-                commandManager = new SimpleCommandManager(Plugin, commands);
+                commandManager = CreateSimpleCommandManager(Plugin, commands);
                 AbstractCommand command = (AbstractCommand) Activator.CreateInstance(handlers[0], Plugin, commandManager);
 
-                ((SimpleCommandManager) commandManager).SetCommand(command);
+                ((AbstractSimpleCommandManager) commandManager).SetCommand(command);
             }
             else
             {
-                commandManager = new ComplexCommandManager(Plugin, commands);
+                commandManager = CreateComplexCommandManager(Plugin, commands);
                 foreach (Type handler in handlers)
                 {
                     AbstractCommand command = (AbstractCommand) Activator.CreateInstance(handler, Plugin, commandManager);
-                    ((ComplexCommandManager) commandManager).AddCommand(command);
+                    ((AbstractComplexCommandManager) commandManager).AddCommand(command);
                 }
             }
 
-            TShockAPI.Commands.ChatCommands.Add(new Command(commandManager.OnCommand, commands));
+            RegisterCommand(commandManager, commands);
             
             CommandManagers.Add(commandManager);
         }
+
+        protected abstract void RegisterCommand(AbstractCommandManager commandManager, params string[] commands);
+
+        protected abstract AbstractSimpleCommandManager CreateSimpleCommandManager(ICobaltPlugin plugin, string[] commands);
+        protected abstract AbstractComplexCommandManager CreateComplexCommandManager(ICobaltPlugin plugin, string[] commands);
     }
 }

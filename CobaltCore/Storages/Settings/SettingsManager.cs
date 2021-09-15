@@ -4,14 +4,12 @@ using System.IO;
 using CobaltCore.Attributes;
 using CobaltCore.Exceptions;
 using CobaltCore.Storages.Configs;
-using TerrariaApi.Server;
-using TShockAPI;
 
 namespace CobaltCore.Storages.Settings
 {
     public class SettingsManager<T> : ISettingsManager
     {
-        private CobaltPlugin Plugin { get; }
+        private ICobaltPlugin Plugin { get; }
         
         private string _name;
         private string _settingsDir;
@@ -21,7 +19,7 @@ namespace CobaltCore.Storages.Settings
         
         private Dictionary<string, IStorageFile> _settings;
 
-        public SettingsManager(CobaltPlugin plugin)
+        public SettingsManager(ICobaltPlugin plugin)
         {
             Plugin = plugin;
             SetFileProperties();
@@ -43,7 +41,7 @@ namespace CobaltCore.Storages.Settings
                 throw new StorageInitException($"SettingsFile {typeof(T).Name} has no FileStorageAttribute");
             }
 
-            _settingsDir = Path.Combine(Plugin.GetDataFolderPath(), "settings");
+            _settingsDir = Path.Combine(Plugin.DataFolder, "settings");
             _name = attribute.Name;
             _storageType = attribute.Type;
         }

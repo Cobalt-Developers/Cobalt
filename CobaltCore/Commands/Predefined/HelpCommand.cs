@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CobaltCore.Attributes;
-using TShockAPI;
+using CobaltCore.Wrappers;
 
 namespace CobaltCore.Commands.Predefined
 {
@@ -9,22 +9,22 @@ namespace CobaltCore.Commands.Predefined
     [SubCommand("help")]
     public class HelpCommand : AbstractCommand
     { 
-        public HelpCommand(CobaltPlugin plugin, CommandManager manager) : base(plugin, manager)
+        public HelpCommand(ICobaltPlugin plugin, AbstractCommandManager manager) : base(plugin, manager)
         {
         }
 
-        public override void Execute(CommandArgs args)
+        public override void Execute(ICobaltPlayer player, List<string> args, string message, bool silent)
         {
-            PrintFullHelp(args.Player);
+            PrintFullHelp(player);
         }
         
-        private void PrintFullHelp(TSPlayer argsPlayer)
+        private void PrintFullHelp(ICobaltPlayer argsPlayer)
         {
             var header = GetHeader(Manager.GetBaseCommands()[0]);
             var content = GetHelpMessages(argsPlayer);
 
-            argsPlayer.SendInfoMessage(header);
-            foreach (var line in content) argsPlayer.SendInfoMessage(line);
+            argsPlayer.SendMessage(header);
+            foreach (var line in content) argsPlayer.SendMessage(line);
         }
 
         private string GetHeader(string label)
@@ -32,12 +32,12 @@ namespace CobaltCore.Commands.Predefined
             return $"=====[ {label.First().ToString().ToUpper()+label.Substring(1).ToLower()} ]=====";
         }
 
-        private List<string> GetHelpMessages(TSPlayer argsPlayer)
+        private List<string> GetHelpMessages(ICobaltPlayer argsPlayer)
         {
             return GetCommands(argsPlayer).Select(c => $"{c.GetHelpMessage()} : {c.Description}").ToList();
         }
         
-        private List<AbstractCommand> GetCommands(TSPlayer argsPlayer)
+        private List<AbstractCommand> GetCommands(ICobaltPlayer argsPlayer)
         {
             var helpCommands = new List<AbstractCommand>(
                 Manager.GetCommands().Where(c => c.HasPermission(argsPlayer))

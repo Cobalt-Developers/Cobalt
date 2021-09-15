@@ -4,7 +4,7 @@ using System.IO;
 using CobaltCore.Attributes;
 using CobaltCore.Exceptions;
 using CobaltCore.Storages.Settings;
-using TShockAPI;
+using CobaltCore.Wrappers;
 
 namespace CobaltCore.Services
 {
@@ -12,7 +12,7 @@ namespace CobaltCore.Services
     {
         private Dictionary<Type, ISettingsManager> _managers;
 
-        public SettingsService(CobaltPlugin plugin) : base(plugin)
+        public SettingsService(ICobaltPlugin plugin) : base(plugin)
         {
         }
 
@@ -70,14 +70,14 @@ namespace CobaltCore.Services
             return GetSettingsManager<T>().GetOrCreateSettings(id);
         }
         
-        public SettingsFile<T> GetSettings<T>(TSPlayer player)
+        public SettingsFile<T> GetSettings<T>(ICobaltPlayer player)
         {
-            return GetSettings<T>(player.Account.Name);
+            return GetSettings<T>(player.DisplayName);
         }
         
-        public SettingsFile<T> GetOrCreateSettings<T>(TSPlayer player)
+        public SettingsFile<T> GetOrCreateSettings<T>(ICobaltPlayer player)
         {
-            return GetOrCreateSettings<T>(player.Account.Name);
+            return GetOrCreateSettings<T>(player.DisplayName);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using CobaltCore.Attributes;
-using TerrariaApi.Server;
-using TShockAPI;
+﻿using System.Collections.Generic;
+using CobaltCore.Attributes;
+using CobaltCore.Wrappers;
 
 namespace CobaltCore.Commands.Predefined
 {
@@ -8,14 +8,14 @@ namespace CobaltCore.Commands.Predefined
     [SubCommand("version", "v")]
     public class VersionCommand: AbstractCommand
     {
-        public VersionCommand(CobaltPlugin plugin, CommandManager manager) : base(plugin, manager)
+        public VersionCommand(ICobaltPlugin plugin, AbstractCommandManager manager) : base(plugin, manager)
         {
         }
 
-        public override void Execute(CommandArgs args)
+        public override void Execute(ICobaltPlayer player, List<string> args, string message, bool silent)
         {
-            args.Player.SendInfoMessage($"You are running {Plugin.Name} version {Plugin.Version} by {Plugin.Author}.");
-            args.Player.SendInfoMessage($"{Plugin.Description}");
+            player.SendMessage($"You are running {Plugin.Name} version {Plugin.Version} by {Plugin.Author}.");
+            player.SendMessage($"{Plugin.Description}");
         }
     }
 }

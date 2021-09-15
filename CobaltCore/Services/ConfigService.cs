@@ -13,7 +13,7 @@ namespace CobaltCore.Services
     {
         private Dictionary<Type, IStorageFile> _configFiles;
 
-        public ConfigService(CobaltPlugin plugin) : base(plugin)
+        public ConfigService(ICobaltPlugin plugin) : base(plugin)
         {
         }
 
@@ -60,7 +60,7 @@ namespace CobaltCore.Services
 
         private void CreateDataFolder()
         {
-            string path = Plugin.GetDataFolderPath();
+            string path = Plugin.DataFolder;
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

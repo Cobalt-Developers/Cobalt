@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using CobaltCore.Attributes;
-using TShockAPI;
+using CobaltCore.Wrappers;
 
 namespace CobaltCore.Commands.Predefined
 {
@@ -8,20 +9,20 @@ namespace CobaltCore.Commands.Predefined
     [SubCommand("reload", "rl")]
     public class ReloadCommand : AbstractCommand
     {
-        public ReloadCommand(CobaltPlugin plugin, CommandManager manager) : base(plugin, manager)
+        public ReloadCommand(ICobaltPlugin plugin, AbstractCommandManager manager) : base(plugin, manager)
         {
         }
 
-        public override void Execute(CommandArgs args)
+        public override void Execute(ICobaltPlayer player, List<string> args, string message, bool silent)
         {
             try
             {
                 Plugin.ServiceManager.Reload();
-                args.Player.SendInfoMessage("Plugin was successfully reloaded!");
+                player.SendMessage("Plugin was successfully reloaded!");
             }
             catch (Exception e)
             {
-                args.Player.SendErrorMessage("Plugin reload failed! View console for more details.");
+                player.SendErrorMessage("Plugin reload failed! View console for more details.");
                 Console.WriteLine(e.ToString());
             }
         }

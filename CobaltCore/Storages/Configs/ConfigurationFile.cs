@@ -13,7 +13,7 @@ namespace CobaltCore.Storages.Configs
         {
         }
 
-        public static ConfigurationFile<T> Create(CobaltPlugin plugin)
+        public static ConfigurationFile<T> Create(ICobaltPlugin plugin)
         {
             var attribute = (FileStorageAttribute) Attribute.GetCustomAttribute(typeof(T), typeof(FileStorageAttribute));
             if (attribute == null)
@@ -21,7 +21,7 @@ namespace CobaltCore.Storages.Configs
                 throw new StorageInitException($"ConfigurationFile {typeof(T).Name} has no FileStorageAttribute");
             }
 
-            var dataFolder = plugin.GetDataFolderPath();
+            var dataFolder = plugin.DataFolder;
             var name = attribute.Name;
             var storageType = attribute.Type;
 

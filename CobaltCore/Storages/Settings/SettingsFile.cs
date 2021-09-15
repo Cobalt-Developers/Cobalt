@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using CobaltCore.Attributes;
 using CobaltCore.Exceptions;
 using CobaltCore.Storages.Configs;
-using TShockAPI;
 
 namespace CobaltCore.Storages.Settings
 {

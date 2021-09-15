@@ -5,7 +5,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.UI;
 using TShockAPI;
 
-namespace CobaltCore.Helpers
+namespace CobaltTSHock.Helpers
 {
     public class EmoteBubbleHelper
     {

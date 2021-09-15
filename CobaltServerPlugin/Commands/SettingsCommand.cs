@@ -1,7 +1,9 @@
-﻿using CobaltCore;
+﻿using System.Collections.Generic;
+using CobaltCore;
 using CobaltCore.Attributes;
 using CobaltCore.Commands;
 using CobaltCore.Storages.Settings;
+using CobaltCore.Wrappers;
 using CobaltServerPlugin.Storage;
 using TShockAPI;
 
@@ -10,15 +12,15 @@ namespace CobaltServerPlugin.Commands
     [Argument("input")]
     public class SettingsCommand : AbstractCommand
     {
-        public SettingsCommand(CobaltPlugin plugin, CommandManager manager) : base(plugin, manager)
+        public SettingsCommand(ICobaltPlugin plugin, AbstractCommandManager manager) : base(plugin, manager)
         {
         }
 
-        public override void Execute(CommandArgs args)
+        public override void Execute(ICobaltPlayer player, List<string> args, string message, bool silent)
         {
-            SettingsFile<TestSettings> settingsFile = Plugin.GetSettingsService().GetOrCreateSettings<TestSettings>(args.Player);
-            args.Player.SendInfoMessage($"Old value: {settingsFile.Content.TestField}");
-            settingsFile.Content.TestField = args.Parameters[0];
+            SettingsFile<TestSettings> settingsFile = Plugin.GetSettingsService().GetOrCreateSettings<TestSettings>(player);
+            player.SendMessage($"Old value: {settingsFile.Content.TestField}");
+            settingsFile.Content.TestField = args[0];
             settingsFile.Save();
         }
     }

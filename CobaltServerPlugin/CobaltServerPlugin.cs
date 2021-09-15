@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CobaltCore;
 using CobaltCore.Attributes;
 using CobaltCore.Messages;
 using CobaltServerPlugin.Commands;
 using CobaltServerPlugin.Configs;
 using CobaltServerPlugin.Storage;
+using CobaltTShock;
 using Microsoft.Xna.Framework;
-using TShockAPI;
 using Terraria;
 using TerrariaApi.Server;
 
@@ -32,8 +28,5 @@ namespace CobaltServerPlugin
         {
             
         }
-
-        public override ColorScheme ColorScheme { get; } =
-            new ColorScheme(Color.White, Color.White, Color.White, Color.White);
     }
 }

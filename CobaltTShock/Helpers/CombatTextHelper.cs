@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using TShockAPI;
 
-namespace CobaltCore.Helpers
+namespace CobaltTSHock.Helpers
 {
     public class CombatTextHelper
     {

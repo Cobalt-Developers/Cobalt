@@ -1,25 +1,26 @@
 ﻿using System;
 using System.IO;
-using CobaltCore.Commands;
+using CobaltCore;
 using CobaltCore.Exceptions;
 using CobaltCore.Messages;
 using CobaltCore.Services;
-using CobaltCore.Storages.Configs;
-using Microsoft.Xna.Framework;
+using CobaltTShock.Services;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
 
-namespace CobaltCore
+namespace CobaltTShock
 {
-    public abstract class CobaltPlugin: TerrariaPlugin
+    public abstract class CobaltPlugin: TerrariaPlugin, ICobaltPlugin
     {
-        public ServiceManager ServiceManager { get; private set; }
+        public string PluginPrefix => $"[{Name}]";
 
-        public abstract ColorScheme ColorScheme { get; }
+        public string DataFolder => Path.Combine(TShock.SavePath, Name);
+        public ServiceManager ServiceManager { get; }
         
         protected CobaltPlugin(Main game) : base(game)
         {
+            ServiceManager = new ServiceManager(this);
         }
 
         public override void Initialize()
@@ -31,14 +32,6 @@ namespace CobaltCore
                 return;
             }
 
-            if (ColorScheme == null)
-            {
-                Log(LogLevel.VERBOSE, "ColorScheme not set! Please define a ColorScheme.");
-                Disable();
-                return;
-            }
-
-            ServiceManager = new ServiceManager(this);
             try
             {
                 ServiceManager.RegisterService<ConfigService>();
@@ -108,18 +101,8 @@ namespace CobaltCore
             }
             Console.ForegroundColor = color;
             
-            Console.WriteLine($"{GetPluginPrefix()} {message}");
+            Console.WriteLine($"{PluginPrefix} {message}");
             Console.ResetColor();
-        }
-
-        public string GetPluginPrefix()
-        {
-            return $"[{Name}]";
-        }
-
-        public string GetDataFolderPath()
-        {
-            return Path.Combine(TShock.SavePath, Name);
         }
 
         /**
@@ -136,9 +119,9 @@ namespace CobaltCore
             return (SettingsService) ServiceManager.GetService<SettingsService>();
         }
         
-        public CommandService GetCommandService()
+        public AbstractCommandService GetCommandService()
         {
-            return (CommandService) ServiceManager.GetService<CommandService>();
+            return (AbstractCommandService) ServiceManager.GetService<CommandService>();
         }
     }
 }
