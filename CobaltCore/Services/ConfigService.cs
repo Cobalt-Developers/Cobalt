@@ -4,16 +4,14 @@ using System.IO;
 using CobaltCore.Attributes;
 using CobaltCore.Exceptions;
 using CobaltCore.Messages;
-using CobaltCore.Services;
+using CobaltCore.Storages;
 using CobaltCore.Storages.Configs;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace CobaltCore.Services
 {
     public class ConfigService : AbstractService
     {
-        private Dictionary<Type, Configuration> _configFiles;
+        private Dictionary<Type, IStorageFile> _configFiles;
 
         public ConfigService(CobaltPlugin plugin) : base(plugin)
         {
@@ -23,12 +21,12 @@ namespace CobaltCore.Services
         {
             CreateDataFolder();
             
-            _configFiles = new Dictionary<Type, Configuration>();
+            _configFiles = new Dictionary<Type, IStorageFile>();
             
             ConfigurationAttribute[] attributes = (ConfigurationAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(ConfigurationAttribute));
             foreach (var attribute in attributes)
             {
-                AddConfig(attribute.ImplType);
+                GetType().GetMethod("AddConfig")?.MakeGenericMethod(attribute.ImplType).Invoke(this, null);
             }
         }
 
@@ -41,22 +39,23 @@ namespace CobaltCore.Services
          * Initialization
          */
         
-        public void AddConfig(Type configType)
+        public void AddConfig<T>()
         {
             try
             {
-                RegisterConfig(configType, Configuration.Create(Plugin, configType));
+                RegisterConfig(ConfigurationFile<T>.Create(Plugin));
             }
             catch (StorageInitException e)
             {
-                Plugin.Log(LogLevel.VERBOSE, "Configuration initialization failed:");
+                Plugin.Log(LogLevel.VERBOSE, "ConfigurationFile initialization failed:");
                 Plugin.Log(LogLevel.VERBOSE, e.Message);
             }
         }
 
-        private void RegisterConfig(Type configType, Configuration config)
+        private void RegisterConfig<T>(ConfigurationFile<T> config)
         {
-            _configFiles.Add(configType, config);
+            if (config == null) throw new ArgumentNullException(nameof(config));
+            _configFiles.Add(typeof(T), config);
         }
 
         private void CreateDataFolder()
@@ -72,33 +71,15 @@ namespace CobaltCore.Services
          * Interface Functions
          */
         
-        public T GetConfig<T>() where T : Configuration
+        public ConfigurationFile<T> GetConfig<T>()
         {
-            return (T) GetConfig(typeof(T));
-        }
-        
-        public Configuration GetConfig(Type configType)
-        {
-            if (!configType.IsSubclassOf(typeof(Configuration)))
-            {
-                throw new InvalidClassTypeException(configType, typeof(Configuration));
-            }
-            return !IsConfigExisting(configType) ? null : _configFiles[configType];
+            if (!IsConfigExisting<T>()) return default;
+            return (ConfigurationFile<T>) _configFiles[typeof(T)];
         }
 
-        public bool IsConfigExisting<T>() where T : Configuration
+        public bool IsConfigExisting<T>()
         {
-            return IsConfigExisting(typeof(T));
-        }
-        
-        public bool IsConfigExisting(Type configType)
-        {
-            if (!configType.IsSubclassOf(typeof(Configuration)))
-            {
-                throw new InvalidClassTypeException(configType, typeof(Configuration));
-            }
-            
-            return _configFiles.ContainsKey(configType);
+            return _configFiles.ContainsKey(typeof(T));
         }
     }
 }

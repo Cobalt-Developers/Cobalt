@@ -10,7 +10,7 @@ namespace CobaltCore.Services
 {
     public class SettingsService : AbstractService
     {
-        private Dictionary<Type, SettingsManager> _managers;
+        private Dictionary<Type, ISettingsManager> _managers;
 
         public SettingsService(CobaltPlugin plugin) : base(plugin)
         {
@@ -32,50 +32,50 @@ namespace CobaltCore.Services
         
         private void LoadSettings()
         {
-            _managers = new Dictionary<Type, SettingsManager>();
+            _managers = new Dictionary<Type, ISettingsManager>();
             
             SettingsAttribute[] attributes = (SettingsAttribute[]) Attribute.GetCustomAttributes(Plugin.GetType(), typeof(SettingsAttribute));
             foreach (var attribute in attributes)
             {
-                AddSettingsManager(attribute.ImplType);
+                GetType().GetMethod("AddSettingsManager")?.MakeGenericMethod(attribute.ImplType).Invoke(this, null);
             }
         }
 
-        public void AddSettingsManager(Type implType)
+        public void AddSettingsManager<T>()
         {
-            var manager = new SettingsManager(Plugin, implType);
-            _managers.Add(implType, manager);
+            var manager = new SettingsManager<T>(Plugin);
+            _managers.Add(typeof(T), manager);
         }
 
         /*
          * Interface Functions
          */
 
-        public SettingsManager GetSettingsManager<T>() where T : Settings
+        public SettingsManager<T> GetSettingsManager<T>()
         {
             if (!_managers.ContainsKey(typeof(T)))
             {
-                throw new ArgumentException($"Settings {typeof(T).Name} not registered; please add it to your plugin");
+                throw new ArgumentException($"SettingsFile {typeof(T).Name} not registered; please add it to your plugin");
             }
-            return _managers[typeof(T)];
+            return (SettingsManager<T>) _managers[typeof(T)];
         }
 
-        public T GetSettings<T>(string id) where T : Settings
+        public SettingsFile<T> GetSettings<T>(string id)
         {
-            return (T) GetSettingsManager<T>().GetSettings(id);
+            return GetSettingsManager<T>().GetSettings(id);
         }
         
-        public T GetOrCreateSettings<T>(string id) where T : Settings
+        public SettingsFile<T> GetOrCreateSettings<T>(string id)
         {
-            return (T) GetSettingsManager<T>().GetOrCreateSettings(id);
+            return GetSettingsManager<T>().GetOrCreateSettings(id);
         }
         
-        public T GetSettings<T>(TSPlayer player) where T : Settings
+        public SettingsFile<T> GetSettings<T>(TSPlayer player)
         {
             return GetSettings<T>(player.Account.Name);
         }
         
-        public T GetOrCreateSettings<T>(TSPlayer player) where T : Settings
+        public SettingsFile<T> GetOrCreateSettings<T>(TSPlayer player)
         {
             return GetOrCreateSettings<T>(player.Account.Name);
         }

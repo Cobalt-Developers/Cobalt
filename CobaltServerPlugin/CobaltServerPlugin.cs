@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using CobaltCore;
 using CobaltCore.Attributes;
+using CobaltCore.Messages;
 using CobaltServerPlugin.Commands;
+using CobaltServerPlugin.Configs;
+using CobaltServerPlugin.Storage;
 using Microsoft.Xna.Framework;
 using TShockAPI;
 using Terraria;
@@ -12,9 +15,11 @@ using TerrariaApi.Server;
 
 namespace CobaltServerPlugin
 {
+    [Configuration(typeof(TestConfig))]
+    [Settings(typeof(TestSettings))]
     [CommandHandler(new[]{"pl", "plugins"}, typeof(ListPluginsCommand))]
     [CommandHandler(new[]{"test"}, typeof(TestCommand))]
-    [CommandHandler(new[]{"test2"}, typeof(Test2Command), typeof(Test3Command))]
+    [CommandHandler(new[]{"settings"}, typeof(SettingsCommand))]
     [ApiVersion(2, 1)]
     public class CobaltServerPlugin : CobaltPlugin
     {
@@ -27,5 +32,8 @@ namespace CobaltServerPlugin
         {
             
         }
+
+        public override ColorScheme ColorScheme { get; } =
+            new ColorScheme(Color.White, Color.White, Color.White, Color.White);
     }
 }

@@ -91,10 +91,12 @@
         <Compile Include="Services\ConfigService.cs" />
         <Compile Include="Services\ServiceManager.cs" />
         <Compile Include="Services\SettingsService.cs" />
-        <Compile Include="Storages\Configs\Configuration.cs" />
-        <Compile Include="Storages\AbstractFileStorage.cs" />
+        <Compile Include="Storages\Configs\ConfigurationFile.cs" />
+        <Compile Include="Storages\IStorageFile.cs" />
+        <Compile Include="Storages\Settings\ISettingsManager.cs" />
+        <Compile Include="Storages\StorageFile.cs" />
         <Compile Include="Storages\FileStorageType.cs" />
-        <Compile Include="Storages\Settings\Settings.cs" />
+        <Compile Include="Storages\Settings\SettingsFile.cs" />
         <Compile Include="Storages\Settings\SettingsManager.cs" />
     </ItemGroup>
     <ItemGroup>

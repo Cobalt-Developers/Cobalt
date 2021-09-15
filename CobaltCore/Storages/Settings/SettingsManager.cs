@@ -9,23 +9,21 @@ using TShockAPI;
 
 namespace CobaltCore.Storages.Settings
 {
-    public class SettingsManager
+    public class SettingsManager<T> : ISettingsManager
     {
         private CobaltPlugin Plugin { get; }
         
-        private Type _implType;
         private string _name;
         private string _settingsDir;
         private FileStorageType _storageType;
         
-        private Settings _default;
+        private SettingsFile<T> _default;
         
-        private Dictionary<string, Settings> _settings;
+        private Dictionary<string, IStorageFile> _settings;
 
-        public SettingsManager(CobaltPlugin plugin, Type implType)
+        public SettingsManager(CobaltPlugin plugin)
         {
             Plugin = plugin;
-            _implType = implType;
             SetFileProperties();
             
             CreateDataFolder();
@@ -39,10 +37,10 @@ namespace CobaltCore.Storages.Settings
         
         private void SetFileProperties()
         {
-            var attribute = (FileStorageAttribute) Attribute.GetCustomAttribute(_implType, typeof(FileStorageAttribute));
+            var attribute = (FileStorageAttribute) Attribute.GetCustomAttribute(typeof(T), typeof(FileStorageAttribute));
             if (attribute == null)
             {
-                throw new StorageInitException($"Settings {_implType.Name} has no FileStorageAttribute");
+                throw new StorageInitException($"SettingsFile {typeof(T).Name} has no FileStorageAttribute");
             }
 
             _settingsDir = Path.Combine(Plugin.GetDataFolderPath(), "settings");
@@ -52,12 +50,12 @@ namespace CobaltCore.Storages.Settings
 
         private void InitDefault()
         {
-            _default = Settings.Create(_implType, _settingsDir, "_default", _storageType);
+            _default = SettingsFile<T>.Create<T>(_settingsDir, "_default", _storageType);
         }
 
         private void LoadSettings()
         {
-            _settings = new Dictionary<string, Settings>();
+            _settings = new Dictionary<string, IStorageFile>();
             
             DirectoryInfo d = new DirectoryInfo(_settingsDir);
             FileInfo[] files = d.GetFiles($"*{_storageType.GetFileEnding()}");
@@ -67,8 +65,8 @@ namespace CobaltCore.Storages.Settings
                 var name = Path.GetFileNameWithoutExtension(file.Name);
                 if (name.Equals("_default", StringComparison.OrdinalIgnoreCase)) continue;
                 
-                Settings settings = Settings.Create(_implType, _settingsDir, name, _storageType);
-                _settings.Add(name, settings);
+                SettingsFile<T> settingsFile = SettingsFile<T>.Create<T>(_settingsDir, name, _storageType);
+                _settings.Add(name, settingsFile);
             }
         }
         
@@ -94,20 +92,20 @@ namespace CobaltCore.Storages.Settings
          * Interface Functions
          */
 
-        public Settings GetSettings(string id)
+        public SettingsFile<T> GetSettings(string id)
         {
-            if (id == null) throw new NullReferenceException("Settings identifier cannot be null");
-            return !_settings.ContainsKey(id) ? null : _settings[id];
+            if (id == null) throw new NullReferenceException("SettingsFile identifier cannot be null");
+            return (SettingsFile<T>) (!_settings.ContainsKey(id) ? null : _settings[id]);
         }
 
-        public Settings GetOrCreateSettings(string id)
+        public SettingsFile<T> GetOrCreateSettings(string id)
         {
-            Settings settings = GetSettings(id);
-            if (settings != null) return settings;
+            SettingsFile<T> settingsFile = GetSettings(id);
+            if (settingsFile != null) return settingsFile;
 
-            settings = Settings.Create(_implType, _settingsDir, id, _storageType);
-            _settings.Add(id, settings);
-            return settings;
+            settingsFile = SettingsFile<T>.Create<T>(_settingsDir, id, _storageType);
+            _settings.Add(id, settingsFile);
+            return settingsFile;
         }
     }
 }
