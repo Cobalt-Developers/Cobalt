@@ -3,6 +3,8 @@ using Cobalt.Api.Commands;
 using Cobalt.Api.Services;
 using CobaltTShock.Commands;
 using TShockAPI;
+using ComplexCommandManager = Cobalt.Api.Commands.ComplexCommandManager;
+using SimpleCommandManager = Cobalt.Api.Commands.SimpleCommandManager;
 
 namespace CobaltTShock.Services
 {
@@ -18,14 +20,14 @@ namespace CobaltTShock.Services
             TShockAPI.Commands.ChatCommands.Add(new Command(cmdManager.OnCommand, commands));
         }
 
-        protected override AbstractSimpleCommandManager CreateSimpleCommandManager(ICobaltPlugin plugin, string[] commands)
+        protected override SimpleCommandManager CreateSimpleCommandManager(ICobaltPlugin plugin, string[] commands)
         {
-            return new SimpleCommandManager(Plugin, commands);
+            return new Commands.SimpleCommandManager(Plugin, commands);
         }
 
-        protected override AbstractComplexCommandManager CreateComplexCommandManager(ICobaltPlugin plugin, string[] commands)
+        protected override ComplexCommandManager CreateComplexCommandManager(ICobaltPlugin plugin, string[] commands)
         {
-            return new ComplexCommandManager(Plugin, commands);
+            return new Commands.ComplexCommandManager(Plugin, commands);
         }
     }
 }

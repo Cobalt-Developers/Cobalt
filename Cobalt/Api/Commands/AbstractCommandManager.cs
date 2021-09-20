@@ -12,7 +12,7 @@ namespace Cobalt.Api.Commands
             Plugin = plugin;
         }
 
-        public abstract void OnCommand(ICobaltPlayer player, List<string> args, string message, bool silent);
+        public abstract void OnCommand(ICobaltPlayer player, List<string> args);
 
         public abstract string[] GetBaseCommands();
 

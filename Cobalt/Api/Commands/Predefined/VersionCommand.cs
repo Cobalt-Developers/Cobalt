@@ -12,7 +12,7 @@ namespace Cobalt.Api.Commands.Predefined
         {
         }
 
-        public override void Execute(ICobaltPlayer player, List<string> args, string message, bool silent)
+        public override void Execute(ICobaltPlayer player, List<string> args)
         {
             player.SendMessage($"You are running {Plugin.Name} version {Plugin.Version} by {Plugin.Author}.");
             player.SendMessage($"{Plugin.Description}");

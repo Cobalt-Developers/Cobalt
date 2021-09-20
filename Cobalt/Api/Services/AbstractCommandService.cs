@@ -21,7 +21,7 @@ namespace Cobalt.Api.Services
         {
             // Add predefined plugin commands
             string pluginCommand = Plugin.Name.ToLower();
-            AbstractComplexCommandManager pluginCommandManager = CreateComplexCommandManager(Plugin, new[] {pluginCommand});
+            ComplexCommandManager pluginCommandManager = CreateComplexCommandManager(Plugin, new[] {pluginCommand});
             pluginCommandManager.AddCommand(new VersionCommand(Plugin, pluginCommandManager));
             pluginCommandManager.AddCommand(new CommandListCommand(Plugin, pluginCommandManager));
             pluginCommandManager.AddCommand(new ReloadCommand(Plugin, pluginCommandManager));
@@ -65,7 +65,7 @@ namespace Cobalt.Api.Services
                 commandManager = CreateSimpleCommandManager(Plugin, commands);
                 AbstractCommand command = (AbstractCommand) Activator.CreateInstance(handlers[0], Plugin, commandManager);
 
-                ((AbstractSimpleCommandManager) commandManager).SetCommand(command);
+                ((SimpleCommandManager) commandManager).SetCommand(command);
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Cobalt.Api.Services
                 foreach (Type handler in handlers)
                 {
                     AbstractCommand command = (AbstractCommand) Activator.CreateInstance(handler, Plugin, commandManager);
-                    ((AbstractComplexCommandManager) commandManager).AddCommand(command);
+                    ((ComplexCommandManager) commandManager).AddCommand(command);
                 }
             }
 
@@ -84,7 +84,14 @@ namespace Cobalt.Api.Services
 
         protected abstract void RegisterCommand(AbstractCommandManager commandManager, params string[] commands);
 
-        protected abstract AbstractSimpleCommandManager CreateSimpleCommandManager(ICobaltPlugin plugin, string[] commands);
-        protected abstract AbstractComplexCommandManager CreateComplexCommandManager(ICobaltPlugin plugin, string[] commands);
+        protected virtual SimpleCommandManager CreateSimpleCommandManager(ICobaltPlugin plugin, string[] commands)
+        {
+            return new SimpleCommandManager(plugin, commands);
+        }
+
+        protected virtual ComplexCommandManager CreateComplexCommandManager(ICobaltPlugin plugin, string[] commands)
+        {
+            return new ComplexCommandManager(plugin, commands);
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 using Cobalt.Api;
+using Cobalt.Api.Attributes;
 using Cobalt.Loader.Attribute;
 using Cobalt.Plugin.Configs;
-using CobaltCore.Attributes;
+using Cobalt.Standalone;
 using Terraria;
 
 namespace Cobalt.Plugin

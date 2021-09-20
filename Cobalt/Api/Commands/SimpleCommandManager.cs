@@ -3,12 +3,12 @@ using Cobalt.Api.Wrappers;
 
 namespace Cobalt.Api.Commands
 {
-    public abstract class AbstractSimpleCommandManager : AbstractCommandManager
+    public class SimpleCommandManager : AbstractCommandManager
     {
         private string[] baseCommands;
         private AbstractCommand command;
 
-        public AbstractSimpleCommandManager(ICobaltPlugin plugin, string[] baseCommands) : base(plugin)
+        public SimpleCommandManager(ICobaltPlugin plugin, string[] baseCommands) : base(plugin)
         {
             this.baseCommands = baseCommands;
         }
@@ -18,9 +18,9 @@ namespace Cobalt.Api.Commands
             this.command = command;
         }
         
-        public override void OnCommand(ICobaltPlayer player, List<string> args, string message, bool silent)
+        public override void OnCommand(ICobaltPlayer player, List<string> args)
         {
-            if (command.TryCommand(player, args, message, silent)) return;
+            if (command.TryCommand(player, args)) return;
             
             // don't show help to someone who isn't supposed to see it
             if (!command.HasPermission(player))

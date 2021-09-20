@@ -55,19 +55,19 @@ namespace Cobalt.Api.Commands
             }
         }
         
-        public abstract void Execute(ICobaltPlayer player, List<string> args, string message, bool silent);
+        public abstract void Execute(ICobaltPlayer player, List<string> args);
 
-        public bool TryCommand(ICobaltPlayer player, List<string> args, string message, bool silent)
+        public bool TryCommand(ICobaltPlayer player, List<string> args)
         {
             if (!HasMatchingSubcommands(args))
                 return false;
 
             var realArguments = args;
             if(subcommands.Count > 0) realArguments.RemoveRange(0, subcommands.Count);
-            PreExecute(player, realArguments, message, silent);
+            PreExecute(player, realArguments);
             return true;
         }
-        public void PreExecute(ICobaltPlayer player, List<string> args, string message, bool silent)
+        public void PreExecute(ICobaltPlayer player, List<string> args)
         {
             if (isIngameCommandOnly)
             {
@@ -92,7 +92,7 @@ namespace Cobalt.Api.Commands
 
             try
             {
-                Execute(player, args, message, silent);
+                Execute(player, args);
             }
             catch (NotImplementedException e)
             {

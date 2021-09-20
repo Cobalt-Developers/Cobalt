@@ -5,7 +5,7 @@ using TShockAPI;
 
 namespace CobaltTShock.Commands
 {
-    public class ComplexCommandManager : AbstractComplexCommandManager, ICommandManager
+    public class ComplexCommandManager : Cobalt.Api.Commands.ComplexCommandManager, ICommandManager
     {
         public ComplexCommandManager(ICobaltPlugin plugin, string[] baseCommands) : base(plugin, baseCommands)
         {
@@ -13,7 +13,7 @@ namespace CobaltTShock.Commands
 
         public void OnCommand(CommandArgs args)
         {
-            OnCommand(TShockPlayer.Wrap(args.Player), args.Parameters, args.Message, args.Silent);
+            OnCommand(TShockPlayer.Wrap(args.Player), args.Parameters);
         }
     }
 }

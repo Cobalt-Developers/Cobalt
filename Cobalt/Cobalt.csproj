@@ -55,11 +55,10 @@
         <Compile Include="Api\Attributes\ServiceAttribute.cs" />
         <Compile Include="Api\Attributes\SettingsAttribute.cs" />
         <Compile Include="Api\Attributes\SubCommandAttribute.cs" />
-        <Compile Include="Api\CobaltStandalonePlugin.cs" />
         <Compile Include="Api\Commands\AbstractCommand.cs" />
         <Compile Include="Api\Commands\AbstractCommandManager.cs" />
-        <Compile Include="Api\Commands\AbstractComplexCommandManager.cs" />
-        <Compile Include="Api\Commands\AbstractSimpleCommandManager.cs" />
+        <Compile Include="Api\Commands\ComplexCommandManager.cs" />
+        <Compile Include="Api\Commands\SimpleCommandManager.cs" />
         <Compile Include="Api\Commands\Arguments\ArgumentConstraint.cs" />
         <Compile Include="Api\Commands\Arguments\ArgumentI.cs" />
         <Compile Include="Api\Commands\Arguments\LengthConstraint.cs" />
@@ -98,12 +97,10 @@
         <Compile Include="Plugin\CobaltServerPlugin.cs" />
         <Compile Include="Plugin\Configs\TestConfig.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\CobaltCore\CobaltCore.csproj">
-        <Project>{ea0a0332-11e8-46c1-bcc8-9346e8ff5fe4}</Project>
-        <Name>CobaltCore</Name>
-      </ProjectReference>
+        <Compile Include="Standalone\CobaltStandalonePlugin.cs" />
+        <Compile Include="Standalone\Exception\CommandInitException.cs" />
+        <Compile Include="Standalone\Manager\CommandManager.cs" />
+        <Compile Include="Standalone\Service\CommandService.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
