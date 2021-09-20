@@ -33,14 +33,14 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="OTAPI, Version=1.4.2.3, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\testserver\ServerPlugins\OTAPI.dll</HintPath>
+          <HintPath>..\..\testserver\OTAPI.dll</HintPath>
         </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
         <Reference Include="TerrariaServer, Version=1.4.2.3, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\testserver\ServerPlugins\TerrariaServer.exe</HintPath>
+          <HintPath>..\..\testserver\TerrariaServer.exe</HintPath>
         </Reference>
         <Reference Include="TShockAPI, Version=4.5.5.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\testserver\ServerPlugins\TShockAPI.dll</HintPath>

@@ -94,7 +94,7 @@ namespace Cobalt.Api.Commands
             {
                 Execute(player, args);
             }
-            catch (NotImplementedException e)
+            catch (NotImplementedException)
             {
                 player.SendErrorMessage("This command was not implemented yet. Please contact the plugin developer.");
             }

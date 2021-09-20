@@ -40,29 +40,28 @@ namespace Cobalt.Standalone.Manager
             _commandActions.Add(command, action);
         }
 
-        public void TryExecuteCommand(ICobaltPlayer player, string command, List<string> args)
+        public bool TryExecuteCommand(ICobaltPlayer player, string command, List<string> args)
         {
-            Console.Out.WriteLine("HandleCommandMessage");
             if (!_commandActions.ContainsKey(command))
             {
-                player.SendErrorMessage($"The command '{command}' is not valid.");
-                return;
+                return false;
             }
             _commandActions[command].Invoke(player, args);
+            return true;
         }
         
-        public static void HandleCommandMessage(ICobaltPlayer player, string chatMessage)
+        public static bool HandleCommandMessage(ICobaltPlayer player, string chatMessage)
         {
             var parts = chatMessage.Substring(1).Split(' ');
             var command = parts[0];
             List<string> args = parts.Skip(1).ToList();
 
-            Instance.TryExecuteCommand(player, command, args);
+            return Instance.TryExecuteCommand(player, command, args);
         }
         
-        public static void HandleCommand(ICobaltPlayer player, string command, List<string> args)
+        public static bool HandleCommand(ICobaltPlayer player, string command, List<string> args)
         {
-            Instance.TryExecuteCommand(player, command, args);
+            return Instance.TryExecuteCommand(player, command, args);
         }
     }
 }

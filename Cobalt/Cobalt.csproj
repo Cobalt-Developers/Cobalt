@@ -93,6 +93,7 @@
         <Compile Include="Loader\Attribute\CobaltPluginAttribute.cs" />
         <Compile Include="Loader\CobaltMain.cs" />
         <Compile Include="Loader\Exception\PluginInitException.cs" />
+        <Compile Include="Loader\Helper\DllHelper.cs" />
         <Compile Include="Loader\PluginLoader.cs" />
         <Compile Include="Plugin\CobaltServerPlugin.cs" />
         <Compile Include="Plugin\Configs\TestConfig.cs" />

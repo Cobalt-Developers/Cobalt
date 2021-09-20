@@ -7,6 +7,7 @@ using Cobalt.Api;
 using Cobalt.Api.Messages;
 using Cobalt.Loader.Attribute;
 using Cobalt.Loader.Exception;
+using Cobalt.Plugin;
 
 namespace Cobalt.Loader
 {
@@ -42,6 +43,11 @@ namespace Cobalt.Loader
         private void InitializePlugins()
         {
             Log("Initializing plugins...");
+            
+            // Initialize core plugin
+            InitializePlugin(typeof(CobaltServerPlugin));
+            
+            // Initialize custom plugin
             _pluginAssemblies.ForEach(assembly =>
             {
                 IEnumerable<Type> pluginClasses = GetTypesWithPluginAttribute(assembly);
