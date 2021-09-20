@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using Cobalt.Api;
-using Cobalt.Api.Exceptions;
-using Cobalt.Api.Messages;
-using Cobalt.Api.Services;
+using Cobalt.Api.Exception;
+using Cobalt.Api.Message;
+using Cobalt.Api.Service;
 using Cobalt.Loader;
 using Cobalt.Standalone.Service;
 

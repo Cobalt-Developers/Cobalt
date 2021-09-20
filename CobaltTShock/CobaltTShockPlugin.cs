@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using Cobalt.Api;
-using Cobalt.Api.Exceptions;
-using Cobalt.Api.Messages;
-using Cobalt.Api.Services;
-using CobaltTShock.Services;
+using Cobalt.Api.Exception;
+using Cobalt.Api.Message;
+using Cobalt.Api.Service;
+using CobaltTShock.Service;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;

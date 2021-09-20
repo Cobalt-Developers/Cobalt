@@ -1,6 +1,6 @@
 ﻿using System;
-using Cobalt.Api.Messages;
-using Cobalt.Api.Services;
+using Cobalt.Api.Message;
+using Cobalt.Api.Service;
 
 namespace Cobalt.Api
 {
@@ -21,7 +21,7 @@ namespace Cobalt.Api
         void PreEnable();
         void Initialize();
         void PostEnable();
-        void Disable(Exception exception);
+        void Disable(System.Exception exception);
         void Disable();
 
         void Log(String message);

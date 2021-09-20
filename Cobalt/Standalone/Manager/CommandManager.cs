@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cobalt.Api.Wrappers;
+using Cobalt.Api.Wrapper;
 using Cobalt.Standalone.Exception;
 
 namespace Cobalt.Standalone.Manager

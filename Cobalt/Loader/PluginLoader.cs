@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Cobalt.Api;
-using Cobalt.Api.Messages;
+using Cobalt.Api.Message;
 using Cobalt.Loader.Attribute;
 using Cobalt.Loader.Exception;
 using Cobalt.Plugin;

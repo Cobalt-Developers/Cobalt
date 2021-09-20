@@ -1,6 +1,6 @@
 ﻿using System;
 using Cobalt.Api;
-using Cobalt.Api.Attributes;
+using Cobalt.Api.Attribute;
 using Cobalt.Loader.Attribute;
 using Cobalt.Plugin.Configs;
 using Cobalt.Standalone;

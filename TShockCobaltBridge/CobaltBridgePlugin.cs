@@ -3,13 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Cobalt.Loader.Exception;
-using CobaltTShock.Wrappers;
+using Cobalt.Loader.Helper;
+using CobaltTShock.Wrapper;
 using Terraria;
 using Terraria.UI.Chat;
 using TerrariaApi.Server;
 using TShockAPI;
 using TShockAPI.Hooks;
-using TShockCobaltBridge.Helper;
 
 namespace TShockCobaltBridge
 {

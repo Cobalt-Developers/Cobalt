@@ -1,5 +1,5 @@
-﻿using Cobalt.Api.Attributes;
-using Cobalt.Api.Storages;
+﻿using Cobalt.Api.Attribute;
+using Cobalt.Api.Storage;
 
 namespace Cobalt.Plugin.Configs
 {

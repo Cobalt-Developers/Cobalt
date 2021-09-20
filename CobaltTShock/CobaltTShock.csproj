@@ -48,14 +48,14 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CobaltTShockPlugin.cs" />
-        <Compile Include="Commands\ComplexCommandManager.cs" />
-        <Compile Include="Commands\ICommandManager.cs" />
-        <Compile Include="Commands\SimpleCommandManager.cs" />
-        <Compile Include="Helpers\CombatTextHelper.cs" />
-        <Compile Include="Helpers\EmoteBubbleHelper.cs" />
+        <Compile Include="Command\ComplexCommandManager.cs" />
+        <Compile Include="Command\ICommandManager.cs" />
+        <Compile Include="Command\SimpleCommandManager.cs" />
+        <Compile Include="Helper\CombatTextHelper.cs" />
+        <Compile Include="Helper\EmoteBubbleHelper.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Services\CommandService.cs" />
-        <Compile Include="Wrappers\TShockPlayer.cs" />
+        <Compile Include="Service\CommandService.cs" />
+        <Compile Include="Wrapper\TShockPlayer.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Cobalt\Cobalt.csproj">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace TShockCobaltBridge.Helper
+namespace Cobalt.Loader.Helper
 {
     public class DllHelper
     {

@@ -1,6 +1,6 @@
 ﻿using Cobalt.Api;
-using Cobalt.Api.Commands;
-using Cobalt.Api.Services;
+using Cobalt.Api.Command;
+using Cobalt.Api.Service;
 using Cobalt.Standalone.Manager;
 
 namespace Cobalt.Standalone.Service
