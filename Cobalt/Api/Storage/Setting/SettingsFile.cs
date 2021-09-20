@@ -15,6 +15,11 @@ namespace Cobalt.Api.Storage.Setting
 
         protected override void InitContentFromNewInstance()
         {
+            if (Name.Equals("_default"))
+            {
+                base.InitContentFromNewInstance();
+                return;
+            }
             // Overide to use _default.yml values
             Content = ReadContentFromDisk(Path.Combine(DataFolder, $"_default{StorageType.GetFileEnding()}"));
         }

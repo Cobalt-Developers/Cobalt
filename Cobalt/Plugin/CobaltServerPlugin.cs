@@ -2,13 +2,11 @@
 using Cobalt.Api;
 using Cobalt.Api.Attribute;
 using Cobalt.Loader.Attribute;
-using Cobalt.Plugin.Configs;
 using Cobalt.Standalone;
 using Terraria;
 
 namespace Cobalt.Plugin
 {
-    [Configuration(typeof(TestConfig))]
     [CobaltPlugin]
     public class CobaltServerPlugin : CobaltStandalonePlugin
     {

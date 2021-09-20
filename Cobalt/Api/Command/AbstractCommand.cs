@@ -142,7 +142,12 @@ namespace Cobalt.Api.Command
             var primarySubcommands = subcommands.Select(s => s[0]).ToArray();
             var prettyArguments = arguments.Select(a => a.ToPrettyString());
             
-            return $"/{command} {string.Join(" ", primarySubcommands)} {string.Join(" ", prettyArguments)}";
+            return $"/{command}{PrefixSpace(string.Join(" ", primarySubcommands))}{PrefixSpace(string.Join(" ", prettyArguments))}";
+        }
+
+        private string PrefixSpace(string str)
+        {
+            return str.Equals(string.Empty) ? "" : $" {str}";
         }
     }
 }
