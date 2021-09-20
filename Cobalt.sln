@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CobaltTShock", "CobaltTShoc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cobalt", "Cobalt\Cobalt.csproj", "{8DD348DE-717B-4CEB-8CB7-EA88B87711F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TShockCobaltBridge", "TShockCobaltBridge\TShockCobaltBridge.csproj", "{150103E3-5423-4838-8DBA-CA895B5BB988}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{8DD348DE-717B-4CEB-8CB7-EA88B87711F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD348DE-717B-4CEB-8CB7-EA88B87711F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DD348DE-717B-4CEB-8CB7-EA88B87711F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{150103E3-5423-4838-8DBA-CA895B5BB988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{150103E3-5423-4838-8DBA-CA895B5BB988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{150103E3-5423-4838-8DBA-CA895B5BB988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{150103E3-5423-4838-8DBA-CA895B5BB988}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

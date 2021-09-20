@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
+using Cobalt.Api;
 using Cobalt.Api.Exceptions;
 using Cobalt.Api.Messages;
 using Cobalt.Api.Services;
 using Cobalt.Loader;
+using Cobalt.Standalone.Service;
 
-namespace Cobalt.Api
+namespace Cobalt.Standalone
 {
     public abstract class CobaltStandalonePlugin : ICobaltPlugin
     {
@@ -30,7 +32,7 @@ namespace Cobalt.Api
         {
             try {
                 PreEnable();
-            } catch (Exception e) {
+            } catch (System.Exception e) {
                 Disable(e);
                 return;
             }
@@ -39,10 +41,10 @@ namespace Cobalt.Api
             {
                 ServiceManager.RegisterService<ConfigService>();
                 ServiceManager.RegisterService<SettingsService>();
-                //ServiceManager.RegisterService<CommandService>();
+                ServiceManager.RegisterService<CommandService>();
                 ServiceManager.RegisterCustomServices();
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 if (!(e is ServiceInitException) && !(e is ServiceAlreadyExistsException)) throw;
                 Log(LogLevel.VERBOSE, "Loading services failed");
@@ -52,7 +54,7 @@ namespace Cobalt.Api
             
             try {
                 PostEnable();
-            } catch (Exception e) {
+            } catch (System.Exception e) {
                 Disable(e);
             }
         }
@@ -65,7 +67,7 @@ namespace Cobalt.Api
         {
         }
         
-        public void Disable(Exception exception)
+        public void Disable(System.Exception exception)
         {
             Log(LogLevel.VERBOSE, "Disabling plugin with the following exception:");
             Log(LogLevel.VERBOSE, exception.ToString());
@@ -124,8 +126,7 @@ namespace Cobalt.Api
         
         public AbstractCommandService GetCommandService()
         {
-            //return (AbstractCommandService) ServiceManager.GetService<CommandService>();
-            throw new NotImplementedException("Standalone Cobalt plugins currently have no CommandService");
+            return (CommandService) ServiceManager.GetService<CommandService>();
         }
     }
 }
