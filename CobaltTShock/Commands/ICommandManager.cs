@@ -1,6 +1,4 @@
-﻿using CobaltCore.Attributes;
-using CobaltCore.Commands;
-using TShockAPI;
+﻿using TShockAPI;
 
 namespace CobaltTShock.Commands
 {

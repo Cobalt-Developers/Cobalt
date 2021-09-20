@@ -47,7 +47,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="CobaltPlugin.cs" />
+        <Compile Include="CobaltTShockPlugin.cs" />
         <Compile Include="Commands\ComplexCommandManager.cs" />
         <Compile Include="Commands\ICommandManager.cs" />
         <Compile Include="Commands\SimpleCommandManager.cs" />
@@ -58,9 +58,9 @@
         <Compile Include="Wrappers\TShockPlayer.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\CobaltCore\CobaltCore.csproj">
-        <Project>{ea0a0332-11e8-46c1-bcc8-9346e8ff5fe4}</Project>
-        <Name>CobaltCore</Name>
+      <ProjectReference Include="..\Cobalt\Cobalt.csproj">
+        <Project>{8dd348de-717b-4ceb-8cb7-ea88b87711f5}</Project>
+        <Name>Cobalt</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

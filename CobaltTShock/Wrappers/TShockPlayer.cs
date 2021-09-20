@@ -1,4 +1,4 @@
-﻿using CobaltCore.Wrappers;
+﻿using Cobalt.Api.Wrappers;
 using TShockAPI;
 
 namespace CobaltTShock.Wrappers

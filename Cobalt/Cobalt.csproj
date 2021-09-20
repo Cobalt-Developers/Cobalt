@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{8DD348DE-717B-4CEB-8CB7-EA88B87711F5}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>Cobalt</RootNamespace>
+        <AssemblyName>Cobalt</AssemblyName>
+        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release\</OutputPath>
+        <DefineConstants>TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="OTAPI, Version=1.4.2.3, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\..\TShock\TShockAPI\bin\Debug\OTAPI.dll</HintPath>
+        </Reference>
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+        <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e">
+          <HintPath>..\packages\YamlDotNet.11.2.1\lib\net45\YamlDotNet.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Api\Attributes\ArgumentAttribute.cs" />
+        <Compile Include="Api\Attributes\CommandHandlerAttribute.cs" />
+        <Compile Include="Api\Attributes\ConfigurationAttribute.cs" />
+        <Compile Include="Api\Attributes\DescriptionAttribute.cs" />
+        <Compile Include="Api\Attributes\FileStorageAttribute.cs" />
+        <Compile Include="Api\Attributes\IngameCommandAttribute.cs" />
+        <Compile Include="Api\Attributes\PermissionAttribute.cs" />
+        <Compile Include="Api\Attributes\ServiceAttribute.cs" />
+        <Compile Include="Api\Attributes\SettingsAttribute.cs" />
+        <Compile Include="Api\Attributes\SubCommandAttribute.cs" />
+        <Compile Include="Api\CobaltStandalonePlugin.cs" />
+        <Compile Include="Api\Commands\AbstractCommand.cs" />
+        <Compile Include="Api\Commands\AbstractCommandManager.cs" />
+        <Compile Include="Api\Commands\AbstractComplexCommandManager.cs" />
+        <Compile Include="Api\Commands\AbstractSimpleCommandManager.cs" />
+        <Compile Include="Api\Commands\Arguments\ArgumentConstraint.cs" />
+        <Compile Include="Api\Commands\Arguments\ArgumentI.cs" />
+        <Compile Include="Api\Commands\Arguments\LengthConstraint.cs" />
+        <Compile Include="Api\Commands\Arguments\NumberConstraint.cs" />
+        <Compile Include="Api\Commands\Predefined\CommandListCommand.cs" />
+        <Compile Include="Api\Commands\Predefined\HelpCommand.cs" />
+        <Compile Include="Api\Commands\Predefined\ReloadCommand.cs" />
+        <Compile Include="Api\Commands\Predefined\VersionCommand.cs" />
+        <Compile Include="Api\Exceptions\InvalidClassTypeException.cs" />
+        <Compile Include="Api\Exceptions\ServiceAlreadyExistsException.cs" />
+        <Compile Include="Api\Exceptions\ServiceInitException.cs" />
+        <Compile Include="Api\Exceptions\StorageInitException.cs" />
+        <Compile Include="Api\Exceptions\UnknownServiceException.cs" />
+        <Compile Include="Api\Helpers\ColorHelper.cs" />
+        <Compile Include="Api\Helpers\OrderedDictionary.cs" />
+        <Compile Include="Api\ICobaltPlugin.cs" />
+        <Compile Include="Api\Messages\ColorScheme.cs" />
+        <Compile Include="Api\Messages\LogLevel.cs" />
+        <Compile Include="Api\Services\AbstractCommandService.cs" />
+        <Compile Include="Api\Services\AbstractService.cs" />
+        <Compile Include="Api\Services\ConfigService.cs" />
+        <Compile Include="Api\Services\ServiceManager.cs" />
+        <Compile Include="Api\Services\SettingsService.cs" />
+        <Compile Include="Api\Storages\Configs\ConfigurationFile.cs" />
+        <Compile Include="Api\Storages\FileStorageType.cs" />
+        <Compile Include="Api\Storages\IStorageFile.cs" />
+        <Compile Include="Api\Storages\Settings\ISettingsManager.cs" />
+        <Compile Include="Api\Storages\Settings\SettingsFile.cs" />
+        <Compile Include="Api\Storages\Settings\SettingsManager.cs" />
+        <Compile Include="Api\Storages\StorageFile.cs" />
+        <Compile Include="Api\Wrappers\ICobaltPlayer.cs" />
+        <Compile Include="Loader\Attribute\CobaltPluginAttribute.cs" />
+        <Compile Include="Loader\CobaltMain.cs" />
+        <Compile Include="Loader\Exception\PluginInitException.cs" />
+        <Compile Include="Loader\PluginLoader.cs" />
+        <Compile Include="Plugin\CobaltServerPlugin.cs" />
+        <Compile Include="Plugin\Configs\TestConfig.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\CobaltCore\CobaltCore.csproj">
+        <Project>{ea0a0332-11e8-46c1-bcc8-9346e8ff5fe4}</Project>
+        <Name>CobaltCore</Name>
+      </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="packages.config" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+         Other similar extension points exist, see Microsoft.Common.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+
+</Project>

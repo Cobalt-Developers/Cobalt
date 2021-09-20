@@ -1,6 +1,6 @@
-﻿using CobaltCore;
-using CobaltCore.Commands;
-using CobaltCore.Services;
+﻿using Cobalt.Api;
+using Cobalt.Api.Commands;
+using Cobalt.Api.Services;
 using CobaltTShock.Commands;
 using TShockAPI;
 

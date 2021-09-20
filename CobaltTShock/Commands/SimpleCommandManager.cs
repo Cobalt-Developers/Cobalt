@@ -1,5 +1,5 @@
-﻿using CobaltCore;
-using CobaltCore.Commands;
+﻿using Cobalt.Api;
+using Cobalt.Api.Commands;
 using CobaltTShock.Wrappers;
 using TShockAPI;
 

@@ -45,52 +45,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Attributes\ArgumentAttribute.cs" />
-        <Compile Include="Attributes\CommandHandlerAttribute.cs" />
-        <Compile Include="Attributes\ConfigurationAttribute.cs" />
-        <Compile Include="Attributes\FileStorageAttribute.cs" />
-        <Compile Include="Attributes\DescriptionAttribute.cs" />
-        <Compile Include="Attributes\IngameCommandAttribute.cs" />
-        <Compile Include="Attributes\PermissionAttribute.cs" />
-        <Compile Include="Attributes\ServiceAttribute.cs" />
-        <Compile Include="Attributes\SettingsAttribute.cs" />
-        <Compile Include="Attributes\SubCommandAttribute.cs" />
-        <Compile Include="Commands\AbstractCommand.cs" />
-        <Compile Include="Commands\Arguments\ArgumentConstraint.cs" />
-        <Compile Include="Commands\Arguments\ArgumentI.cs" />
-        <Compile Include="Commands\Arguments\NumberConstraint.cs" />
-        <Compile Include="Commands\Arguments\LengthConstraint.cs" />
-        <Compile Include="Commands\AbstractCommandManager.cs" />
-        <Compile Include="Commands\AbstractComplexCommandManager.cs" />
-        <Compile Include="Commands\Predefined\CommandListCommand.cs" />
-        <Compile Include="Commands\Predefined\HelpCommand.cs" />
-        <Compile Include="Commands\Predefined\ReloadCommand.cs" />
-        <Compile Include="Commands\Predefined\VersionCommand.cs" />
-        <Compile Include="Commands\AbstractSimpleCommandManager.cs" />
-        <Compile Include="Exceptions\StorageInitException.cs" />
-        <Compile Include="Exceptions\InvalidClassTypeException.cs" />
-        <Compile Include="Exceptions\ServiceAlreadyExistsException.cs" />
-        <Compile Include="Exceptions\ServiceInitException.cs" />
-        <Compile Include="Exceptions\UnknownServiceException.cs" />
-        <Compile Include="Helpers\ColorHelper.cs" />
-        <Compile Include="Helpers\OrderedDictionary.cs" />
-        <Compile Include="ICobaltPlugin.cs" />
-        <Compile Include="Messages\ColorScheme.cs" />
-        <Compile Include="Messages\LogLevel.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Services\AbstractService.cs" />
-        <Compile Include="Services\AbstractCommandService.cs" />
-        <Compile Include="Services\ConfigService.cs" />
-        <Compile Include="Services\ServiceManager.cs" />
-        <Compile Include="Services\SettingsService.cs" />
-        <Compile Include="Storages\Configs\ConfigurationFile.cs" />
-        <Compile Include="Storages\IStorageFile.cs" />
-        <Compile Include="Storages\Settings\ISettingsManager.cs" />
-        <Compile Include="Storages\StorageFile.cs" />
-        <Compile Include="Storages\FileStorageType.cs" />
-        <Compile Include="Storages\Settings\SettingsFile.cs" />
-        <Compile Include="Storages\Settings\SettingsManager.cs" />
-        <Compile Include="Wrappers\ICobaltPlayer.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
