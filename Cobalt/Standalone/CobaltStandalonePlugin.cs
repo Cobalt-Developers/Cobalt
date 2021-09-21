@@ -28,37 +28,6 @@ namespace Cobalt.Standalone
             ServiceManager = new ServiceManager(this);
         }
 
-        public void Initialize()
-        {
-            try {
-                PreEnable();
-            } catch (System.Exception e) {
-                Disable(e);
-                return;
-            }
-
-            try
-            {
-                ServiceManager.RegisterService<ConfigService>();
-                ServiceManager.RegisterService<SettingsService>();
-                ServiceManager.RegisterService<CommandService>();
-                ServiceManager.RegisterCustomServices();
-            }
-            catch (System.Exception e)
-            {
-                if (!(e is ServiceInitException) && !(e is ServiceAlreadyExistsException)) throw;
-                Log(LogLevel.VERBOSE, "Loading services failed");
-                Disable(e);
-                return;
-            }
-            
-            try {
-                PostEnable();
-            } catch (System.Exception e) {
-                Disable(e);
-            }
-        }
-
         public virtual void PreEnable()
         {
         }

@@ -19,7 +19,6 @@ namespace Cobalt.Api
         bool Enabled { get; }
 
         void PreEnable();
-        void Initialize();
         void PostEnable();
         void Disable(System.Exception exception);
         void Disable();

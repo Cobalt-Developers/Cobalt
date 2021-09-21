@@ -10,7 +10,7 @@ namespace Cobalt.Api.Service
     {
         private ICobaltPlugin Plugin { get; }
 
-        private OrderedDictionary<Type, AbstractService> services = new OrderedDictionary<Type, AbstractService>(); // TODO: restrict to only AbstractService
+        private readonly OrderedDictionary<Type, AbstractService> _services = new OrderedDictionary<Type, AbstractService>();
 
         public ServiceManager(ICobaltPlugin plugin)
         {
@@ -19,7 +19,7 @@ namespace Cobalt.Api.Service
 
         public bool Exists<T>() where T : AbstractService
         {
-            return services.Contains(typeof(T));
+            return _services.Contains(typeof(T));
         }
 
         public void RegisterCustomServices()
@@ -56,7 +56,7 @@ namespace Cobalt.Api.Service
                 throw new ServiceInitException("Service creation failed.", e);
             }
             service.Init();
-            services.Add(typeof(T), service);
+            _services.Add(typeof(T), service);
         }
 
         public AbstractService GetService<T>() where T : AbstractService
@@ -65,7 +65,7 @@ namespace Cobalt.Api.Service
             {
                 throw new UnknownServiceException($"Could not retrieve service: {typeof(T).Name}");
             }
-            return services[typeof(T)];
+            return _services[typeof(T)];
         }
 
         public void Reload<T>() where T : AbstractService
@@ -75,7 +75,7 @@ namespace Cobalt.Api.Service
 
         public void Reload()
         {
-            foreach (DictionaryEntry service in services)
+            foreach (DictionaryEntry service in _services)
             {
                 ((AbstractService) service.Value).Reload();
             }

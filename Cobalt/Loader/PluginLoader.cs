@@ -4,10 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Cobalt.Api;
+using Cobalt.Api.Exception;
 using Cobalt.Api.Message;
+using Cobalt.Api.Service;
 using Cobalt.Loader.Attribute;
 using Cobalt.Loader.Exception;
 using Cobalt.Plugin;
+using Cobalt.Standalone.Service;
 
 namespace Cobalt.Loader
 {
@@ -68,26 +71,58 @@ namespace Cobalt.Loader
 
         private void InitializePlugin(Type pluginClass)
         {
-            var instance = (ICobaltPlugin) Activator.CreateInstance(pluginClass);
+            var plugin = (ICobaltPlugin) Activator.CreateInstance(pluginClass);
 
-            if (_pluginInstances.ContainsKey(instance.Name))
+            if (_pluginInstances.ContainsKey(plugin.Name))
             {
-                throw new PluginInitException($"Plugin with the name '{instance.Name}' already exists.");
+                throw new PluginInitException($"Plugin with the name '{plugin.Name}' already exists.");
             }
 
-            _pluginInstances.Add(instance.Name, instance);
+            _pluginInstances.Add(plugin.Name, plugin);
 
+            InitializePlugin(plugin);
+            
+            Log($"{plugin.Name} {plugin.Version} initialized.");
+        }
+
+        private static void InitializePlugin(ICobaltPlugin plugin)
+        {
+            // PreEnable
             try
             {
-                instance.Initialize();
+                plugin.PreEnable();
             }
             catch (System.Exception e)
             {
-                instance.Disable();
-                throw new PluginInitException("Exception while calling Initialize()", e);
+                plugin.Disable(e);
+                return;
             }
             
-            Log($"{instance.Name} {instance.Version} initialized.");
+            // Initialize Services
+            try
+            {
+                plugin.ServiceManager.RegisterService<ConfigService>();
+                plugin.ServiceManager.RegisterService<SettingsService>();
+                plugin.ServiceManager.RegisterService<CommandService>();
+                plugin.ServiceManager.RegisterCustomServices();
+            }
+            catch (System.Exception e)
+            {
+                if (!(e is ServiceInitException) && !(e is ServiceAlreadyExistsException)) throw;
+                Log(LogLevel.VERBOSE, "Loading services failed");
+                plugin.Disable(e);
+                return;
+            }
+            
+            // PostEnable
+            try
+            {
+                plugin.PostEnable();
+            }
+            catch (System.Exception e)
+            {
+                plugin.Disable(e);
+            }
         }
 
         private static IEnumerable<Type> GetTypesWithPluginAttribute(Assembly assembly)
