@@ -19,12 +19,7 @@ namespace Cobalt.Api.Service
 
         public bool Exists<T>() where T : AbstractService
         {
-            return Exists(typeof(T));
-        }
-        
-        private bool Exists(Type serviceType)
-        {
-            return services.Contains(serviceType);
+            return services.Contains(typeof(T));
         }
 
         public void RegisterCustomServices()
@@ -36,7 +31,7 @@ namespace Cobalt.Api.Service
                 foreach (var attribute in attributes)
                 {
                     Plugin.Log("Registering custom service " + attribute.Value.Name);
-                    RegisterService(attribute.Value);
+                    GetType().GetMethod("RegisterService")?.MakeGenericMethod(attribute.Value).Invoke(this, null);
                 }
             }
             catch (ServiceAlreadyExistsException e)
@@ -51,22 +46,17 @@ namespace Cobalt.Api.Service
             {
                 throw new ServiceAlreadyExistsException($"The Service '{typeof(T).Name}' is already existing.");
             }
-            RegisterService(typeof(T));
-        }
-        
-        private void RegisterService(Type serviceType)
-        {
             AbstractService service;
             try
             {
-                service = (AbstractService) Activator.CreateInstance(serviceType, Plugin);
+                service = (AbstractService) Activator.CreateInstance(typeof(T), Plugin);
             }
             catch (System.Exception e)
             {
                 throw new ServiceInitException("Service creation failed.", e);
             }
             service.Init();
-            services.Add(serviceType, service);
+            services.Add(typeof(T), service);
         }
 
         public AbstractService GetService<T>() where T : AbstractService
