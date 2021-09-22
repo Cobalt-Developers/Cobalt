@@ -81,6 +81,7 @@
         <Compile Include="Api\Message\FormattedKeyValueEntry.cs" />
         <Compile Include="Api\Message\FormattedDictionary.cs" />
         <Compile Include="Api\Message\LogLevel.cs" />
+        <Compile Include="Api\Message\PageableList.cs" />
         <Compile Include="Api\Model\IChatSender.cs" />
         <Compile Include="Api\Model\IPrettyPrintable.cs" />
         <Compile Include="Api\Service\AbstractCommandService.cs" />

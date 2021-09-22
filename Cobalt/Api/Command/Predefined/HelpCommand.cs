@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cobalt.Api.Attribute;
+using Cobalt.Api.Command.Argument;
+using Cobalt.Api.Message;
 using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command.Predefined
 {
     [Description("Displays command help")]
     [SubCommand("help")]
+    [Argument("page", true, typeof(NumberConstraint))]
     public class HelpCommand : AbstractCommand
     { 
         public HelpCommand(ICobaltPlugin plugin, AbstractCommandManager manager) : base(plugin, manager)
@@ -15,21 +19,16 @@ namespace Cobalt.Api.Command.Predefined
 
         public override void Execute(IChatSender sender, List<string> args)
         {
-            PrintFullHelp(sender);
+            var page = args.Count > 0 ? Convert.ToInt32(args[0]) : 1;
+            PrintFullHelp(sender, page);
         }
         
-        private void PrintFullHelp(IChatSender sender)
+        private void PrintFullHelp(IChatSender sender, int page)
         {
-            var header = GetHeader(Manager.GetBaseCommands()[0]);
-            var content = GetHelpMessages(sender);
+            var title = Manager.GetBaseCommands()[0];
+            List<string> content = GetHelpMessages(sender);
 
-            sender.SendMessage(header);
-            foreach (var line in content) sender.SendMessage(line);
-        }
-
-        private string GetHeader(string label)
-        {
-            return $"=====[ {label.First().ToString().ToUpper()+label.Substring(1).ToLower()} ]=====";
+            new PageableList(title, content).Print(sender, page);
         }
 
         private List<string> GetHelpMessages(IChatSender sender)
