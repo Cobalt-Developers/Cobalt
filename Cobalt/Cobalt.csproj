@@ -67,6 +67,8 @@
         <Compile Include="Api\Command\Predefined\HelpCommand.cs" />
         <Compile Include="Api\Command\Predefined\ReloadCommand.cs" />
         <Compile Include="Api\Command\Predefined\VersionCommand.cs" />
+        <Compile Include="Api\Confirm\ConfirmRegistry.cs" />
+        <Compile Include="Api\Confirm\IConfirmable.cs" />
         <Compile Include="Api\Exception\InvalidClassTypeException.cs" />
         <Compile Include="Api\Exception\ServiceAlreadyExistsException.cs" />
         <Compile Include="Api\Exception\ServiceInitException.cs" />

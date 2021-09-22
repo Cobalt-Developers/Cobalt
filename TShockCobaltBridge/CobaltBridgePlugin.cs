@@ -59,7 +59,6 @@ namespace TShockCobaltBridge
 
         private void OnChat(PlayerCommandEventArgs args)
         {
-            Console.WriteLine(args.Player.TPlayer.whoAmI);
             IChatSender sender = args.Player.TPlayer.whoAmI == -1
                 ? new TShockChatSender(args.Player)
                 : new TShockPlayer(args.Player);

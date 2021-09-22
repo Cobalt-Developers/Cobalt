@@ -36,5 +36,16 @@ namespace CobaltTShock.Wrapper
                 {"name", DisplayName}
             };
         }
+
+
+        public override bool Equals(object obj)
+        {
+            return obj is TShockChatSender item && SrcInstance.Equals(item.SrcInstance);
+        }
+
+        public override int GetHashCode()
+        {
+            return SrcInstance.GetHashCode();
+        }
     }
 }

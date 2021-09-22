@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cobalt.Api.Model;
 
 namespace CobaltTShock.Wrapper
@@ -21,6 +22,19 @@ namespace CobaltTShock.Wrapper
                 {"x", X},
                 {"y", Y}
             };
+        }
+
+        protected bool Equals(TShockPosition other)
+        {
+            return X.Equals(other.X) && Y.Equals(other.Y);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
+            }
         }
     }
 }
