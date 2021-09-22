@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Cobalt.Api.Message;
 
-namespace Cobalt.Api.Wrapper
+namespace Cobalt.Api.Model
 {
-    public abstract class WrappedEntity
+    public abstract class WrappedEntity : IPrettyPrintable
     {
         public override string ToString()
         {

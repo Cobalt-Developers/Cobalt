@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cobalt.Api.Attribute;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command.Predefined
 {
@@ -12,10 +12,10 @@ namespace Cobalt.Api.Command.Predefined
         {
         }
 
-        public override void Execute(CobaltPlayer player, List<string> args)
+        public override void Execute(IChatSender sender, List<string> args)
         {
-            player.SendMessage($"You are running {Plugin.Name} version {Plugin.Version} by {Plugin.Author}.");
-            player.SendMessage($"{Plugin.Description}");
+            sender.SendMessage($"You are running {Plugin.Name} version {Plugin.Version} by {Plugin.Author}.");
+            sender.SendMessage($"{Plugin.Description}");
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Cobalt.Api.Attribute;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command.Predefined
 {
@@ -13,18 +13,18 @@ namespace Cobalt.Api.Command.Predefined
         {
         }
 
-        public override void Execute(CobaltPlayer player, List<string> args)
+        public override void Execute(IChatSender sender, List<string> args)
         {
-            PrintFullHelp(player);
+            PrintFullHelp(sender);
         }
         
-        private void PrintFullHelp(CobaltPlayer argsPlayer)
+        private void PrintFullHelp(IChatSender sender)
         {
             var header = GetHeader(Manager.GetBaseCommands()[0]);
-            var content = GetHelpMessages(argsPlayer);
+            var content = GetHelpMessages(sender);
 
-            argsPlayer.SendMessage(header);
-            foreach (var line in content) argsPlayer.SendMessage(line);
+            sender.SendMessage(header);
+            foreach (var line in content) sender.SendMessage(line);
         }
 
         private string GetHeader(string label)
@@ -32,15 +32,15 @@ namespace Cobalt.Api.Command.Predefined
             return $"=====[ {label.First().ToString().ToUpper()+label.Substring(1).ToLower()} ]=====";
         }
 
-        private List<string> GetHelpMessages(CobaltPlayer argsPlayer)
+        private List<string> GetHelpMessages(IChatSender sender)
         {
-            return GetCommands(argsPlayer).Select(c => $"{c.GetHelpMessage()} : {c.Description}").ToList();
+            return GetCommands(sender).Select(c => $"{c.GetHelpMessage()} : {c.Description}").ToList();
         }
         
-        private List<AbstractCommand> GetCommands(CobaltPlayer argsPlayer)
+        private List<AbstractCommand> GetCommands(IChatSender sender)
         {
             var helpCommands = new List<AbstractCommand>(
-                Manager.GetCommands().Where(c => c.HasPermission(argsPlayer))
+                Manager.GetCommands().Where(c => c.HasPermission(sender))
                 );
             // TODO: Sort with priority
             return helpCommands;

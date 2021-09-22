@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace CobaltTShock.Wrapper
 {
-    public class TShockPosition : CobaltPosition
+    public class TShockPosition : WrappedEntity, IPosition
     {
         public float X { get; }
         public float Y { get; }

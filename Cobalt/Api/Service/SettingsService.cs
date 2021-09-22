@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cobalt.Api.Attribute;
+using Cobalt.Api.Model;
 using Cobalt.Api.Storage.Setting;
-using Cobalt.Api.Wrapper;
 
 namespace Cobalt.Api.Service
 {
@@ -68,12 +68,12 @@ namespace Cobalt.Api.Service
             return GetSettingsManager<T>().GetOrCreateSettings(id);
         }
         
-        public SettingsFile<T> GetSettings<T>(CobaltPlayer player)
+        public SettingsFile<T> GetSettings<T>(IPlayer player)
         {
             return GetSettings<T>(player.DisplayName);
         }
         
-        public SettingsFile<T> GetOrCreateSettings<T>(CobaltPlayer player)
+        public SettingsFile<T> GetOrCreateSettings<T>(IPlayer player)
         {
             return GetOrCreateSettings<T>(player.DisplayName);
         }

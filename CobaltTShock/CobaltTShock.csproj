@@ -55,6 +55,7 @@
         <Compile Include="Helper\EmoteBubbleHelper.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Service\CommandService.cs" />
+        <Compile Include="Wrapper\TShockChatSender.cs" />
         <Compile Include="Wrapper\TShockPlayer.cs" />
         <Compile Include="Wrapper\TShockPosition.cs" />
     </ItemGroup>

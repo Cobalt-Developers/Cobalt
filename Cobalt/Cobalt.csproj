@@ -79,6 +79,8 @@
         <Compile Include="Api\Message\FormattedKeyValueEntry.cs" />
         <Compile Include="Api\Message\FormattedDictionary.cs" />
         <Compile Include="Api\Message\LogLevel.cs" />
+        <Compile Include="Api\Model\IChatSender.cs" />
+        <Compile Include="Api\Model\IPrettyPrintable.cs" />
         <Compile Include="Api\Service\AbstractCommandService.cs" />
         <Compile Include="Api\Service\AbstractService.cs" />
         <Compile Include="Api\Service\ConfigService.cs" />
@@ -91,9 +93,9 @@
         <Compile Include="Api\Storage\Setting\SettingsFile.cs" />
         <Compile Include="Api\Storage\Setting\SettingsManager.cs" />
         <Compile Include="Api\Storage\StorageFile.cs" />
-        <Compile Include="Api\Wrapper\CobaltPlayer.cs" />
-        <Compile Include="Api\Wrapper\CobaltPosition.cs" />
-        <Compile Include="Api\Wrapper\WrappedEntity.cs" />
+        <Compile Include="Api\Model\IPlayer.cs" />
+        <Compile Include="Api\Model\IPosition.cs" />
+        <Compile Include="Api\Model\WrappedEntity.cs" />
         <Compile Include="Loader\Attribute\CobaltPluginAttribute.cs" />
         <Compile Include="Loader\CobaltMain.cs" />
         <Compile Include="Loader\Exception\PluginInitException.cs" />

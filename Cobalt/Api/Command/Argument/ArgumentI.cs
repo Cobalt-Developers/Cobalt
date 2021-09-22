@@ -1,4 +1,4 @@
-﻿using Cobalt.Api.Wrapper;
+﻿using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command.Argument
 {
@@ -18,11 +18,11 @@ namespace Cobalt.Api.Command.Argument
             Constraint = constraint;
         }
 
-        public bool TestArgumentOrError(CobaltPlayer argsPlayer, string input)
+        public bool TestArgumentOrError(IChatSender sender, string input)
         {
             if (Constraint == null || Constraint.IsSatisfied(input)) return true;
-            argsPlayer.SendErrorMessage("Argument Constraint not satisfied:");
-            argsPlayer.SendErrorMessage(Constraint.GetErrorMessage(input));
+            sender.SendErrorMessage("Argument Constraint not satisfied:");
+            sender.SendErrorMessage(Constraint.GetErrorMessage(input));
             return false;
         }
         

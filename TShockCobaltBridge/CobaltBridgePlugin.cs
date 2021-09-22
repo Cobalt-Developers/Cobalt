@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Cobalt.Api.Model;
 using Cobalt.Loader.Exception;
 using Cobalt.Loader.Helper;
 using CobaltTShock.Wrapper;
@@ -58,7 +59,11 @@ namespace TShockCobaltBridge
 
         private void OnChat(PlayerCommandEventArgs args)
         {
-            args.Handled = Cobalt.Standalone.Manager.CommandManager.HandleCommand(TShockPlayer.Wrap(args.Player), args.CommandName, args.Parameters);
+            Console.WriteLine(args.Player.TPlayer.whoAmI);
+            IChatSender sender = args.Player.TPlayer.whoAmI == -1
+                ? new TShockChatSender(args.Player)
+                : new TShockPlayer(args.Player);
+            args.Handled = Cobalt.Standalone.Manager.CommandManager.HandleCommand(sender, args.CommandName, args.Parameters);
         }
     }
 }

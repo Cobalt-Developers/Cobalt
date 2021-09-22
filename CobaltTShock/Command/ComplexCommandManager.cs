@@ -1,5 +1,7 @@
 ﻿using Cobalt.Api;
+using Cobalt.Api.Model;
 using CobaltTShock.Wrapper;
+using Terraria;
 using TShockAPI;
 
 namespace CobaltTShock.Command
@@ -12,7 +14,10 @@ namespace CobaltTShock.Command
 
         public void OnCommand(CommandArgs args)
         {
-            OnCommand(TShockPlayer.Wrap(args.Player), args.Parameters);
+            IChatSender sender = args.TPlayer.whoAmI == -1
+                ? new TShockChatSender(args.Player)
+                : new TShockPlayer(args.Player);
+            OnCommand(sender, args.Parameters);
         }
     }
 }

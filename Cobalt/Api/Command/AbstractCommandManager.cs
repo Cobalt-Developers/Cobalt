@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command
 {
@@ -12,7 +12,7 @@ namespace Cobalt.Api.Command
             Plugin = plugin;
         }
 
-        public abstract void OnCommand(CobaltPlayer player, List<string> args);
+        public abstract void OnCommand(IChatSender sender, List<string> args);
 
         public abstract string[] GetBaseCommands();
 

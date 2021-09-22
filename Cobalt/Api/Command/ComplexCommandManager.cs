@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cobalt.Api.Command.Predefined;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command
 {
@@ -18,23 +18,23 @@ namespace Cobalt.Api.Command
             subCommands.Add(helpCommand);
         }
 
-        public override void OnCommand(CobaltPlayer player, List<string> args)
+        public override void OnCommand(IChatSender sender, List<string> args)
         {
             if (args.Count == 0)
             {
                 // Display help (page 0)
-                helpCommand.PreExecute(player, args);
+                helpCommand.PreExecute(sender, args);
                 return;
             }
 
             // Try Actual Commands
             foreach (AbstractCommand command in subCommands)
             {
-                if (command.TryCommand(player, args)) return;
+                if (command.TryCommand(sender, args)) return;
             }
 
             // Display help (all pages)
-            helpCommand.PreExecute(player, args);
+            helpCommand.PreExecute(sender, args);
         }
 
         public void AddCommand(AbstractCommand command)

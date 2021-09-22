@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cobalt.Api.Attribute;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command.Predefined
 {
@@ -13,16 +13,16 @@ namespace Cobalt.Api.Command.Predefined
         {
         }
 
-        public override void Execute(CobaltPlayer player, List<string> args)
+        public override void Execute(IChatSender sender, List<string> args)
         {
             try
             {
                 Plugin.ServiceManager.Reload();
-                player.SendMessage("Plugin was successfully reloaded!");
+                sender.SendMessage("Plugin was successfully reloaded!");
             }
             catch (System.Exception e)
             {
-                player.SendErrorMessage("Plugin reload failed! View console for more details.");
+                sender.SendErrorMessage("Plugin reload failed! View console for more details.");
                 Console.WriteLine(e.ToString());
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cobalt.Api.Attribute;
 using Cobalt.Api.Command.Argument;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command
 {
@@ -55,54 +55,54 @@ namespace Cobalt.Api.Command
             }
         }
         
-        public abstract void Execute(CobaltPlayer player, List<string> args);
+        public abstract void Execute(IChatSender chatSender, List<string> args);
 
-        public bool TryCommand(CobaltPlayer player, List<string> args)
+        public bool TryCommand(IChatSender sender, List<string> args)
         {
             if (!HasMatchingSubcommands(args))
                 return false;
 
             var realArguments = args;
             if(subcommands.Count > 0) realArguments.RemoveRange(0, subcommands.Count);
-            PreExecute(player, realArguments);
+            PreExecute(sender, realArguments);
             return true;
         }
-        public void PreExecute(CobaltPlayer player, List<string> args)
+        public void PreExecute(IChatSender sender, List<string> args)
         {
-            if (isIngameCommandOnly)
+            if (isIngameCommandOnly && !(sender is IPlayer))
             {
-                player.SendErrorMessage("You must be a real player to execute this command.");
+                sender.SendErrorMessage("You must be a real sender to execute this command.");
                 return;
             }
             
-            if (!HasPermission(player))
+            if (!HasPermission(sender))
             {
-                player.SendErrorMessage("You do not have the necessary permission to execute this command.");
+                sender.SendErrorMessage("You do not have the necessary permission to execute this command.");
                 return;
             }
 
             if (!HasRequiredArgumentSize(args))
             {
-                player.SendErrorMessage("Invalid arguments. Try that:");
-                player.SendErrorMessage(GetHelpMessage());
+                sender.SendErrorMessage("Invalid arguments. Try that:");
+                sender.SendErrorMessage(GetHelpMessage());
                 return;
             }
             
-            if (!TestArgumentConditions(player, args)) return;
+            if (!TestArgumentConditions(sender, args)) return;
 
             try
             {
-                Execute(player, args);
+                Execute(sender, args);
             }
             catch (NotImplementedException)
             {
-                player.SendErrorMessage("This command was not implemented yet. Please contact the plugin developer.");
+                sender.SendErrorMessage("This command was not implemented yet. Please contact the plugin developer.");
             }
         }
         
-        public bool HasPermission(CobaltPlayer player)
+        public bool HasPermission(IChatSender sender)
         {
-            return GetPermissions().Count == 0 || permissions.All(player.HasPermission);
+            return GetPermissions().Count == 0 || permissions.All(sender.HasPermission);
         }
 
         private List<string> GetPermissions()
@@ -119,10 +119,10 @@ namespace Cobalt.Api.Command
                 .Any(n => n.Equals(args[i], StringComparison.OrdinalIgnoreCase))).Any();
         }
 
-        private bool TestArgumentConditions(CobaltPlayer argsPlayer, List<string> args)
+        private bool TestArgumentConditions(IChatSender sender, List<string> args)
         {
             var relevantArgs = args.GetRange(0, Math.Min(args.Count, arguments.Count));
-            return !relevantArgs.Where((arg, i) => !arguments[i].TestArgumentOrError(argsPlayer, arg)).Any();
+            return !relevantArgs.Where((arg, i) => !arguments[i].TestArgumentOrError(sender, arg)).Any();
         }
 
         private bool HasRequiredArgumentSize(List<string> args)

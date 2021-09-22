@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Cobalt.Api.Wrapper;
+using Cobalt.Api.Model;
 
 namespace Cobalt.Api.Command
 {
@@ -18,19 +18,19 @@ namespace Cobalt.Api.Command
             this.command = command;
         }
         
-        public override void OnCommand(CobaltPlayer player, List<string> args)
+        public override void OnCommand(IChatSender sender, List<string> args)
         {
-            if (command.TryCommand(player, args)) return;
+            if (command.TryCommand(sender, args)) return;
             
             // don't show help to someone who isn't supposed to see it
-            if (!command.HasPermission(player))
+            if (!command.HasPermission(sender))
             {
-                player.SendErrorMessage("You do not have the necessary permission to execute this command.");
+                sender.SendErrorMessage("You do not have the necessary permission to execute this command.");
                 return;
             }
             
-            player.SendErrorMessage("Invalid command. Try that:");
-            player.SendErrorMessage(command.GetHelpMessage());
+            sender.SendErrorMessage("Invalid command. Try that:");
+            sender.SendErrorMessage(command.GetHelpMessage());
         }
 
         public override string[] GetBaseCommands()
