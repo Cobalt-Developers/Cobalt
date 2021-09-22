@@ -1,13 +1,14 @@
-﻿using Cobalt.Api.Wrapper;
+﻿using System.Collections.Generic;
+using Cobalt.Api.Wrapper;
 using TShockAPI;
 
 namespace CobaltTShock.Wrapper
 {
-    public class TShockPlayer : ICobaltPlayer
+    public class TShockPlayer : CobaltPlayer
     {
-        public TSPlayer SrcInstance { get; }
-        public string DisplayName => SrcInstance.Name;
-        public ICobaltPosition Position => new TShockPosition(SrcInstance.X, SrcInstance.X);
+        private TSPlayer SrcInstance { get; }
+        public override string DisplayName => SrcInstance.Name;
+        public override CobaltPosition Position => new TShockPosition(SrcInstance.X, SrcInstance.X);
 
         public TShockPlayer(TSPlayer srcInstance)
         {
@@ -19,31 +20,39 @@ namespace CobaltTShock.Wrapper
             return new TShockPlayer(src);
         }
         
-        public void SendMessage(string msg)
+        public override void SendMessage(string msg)
         {
             SrcInstance.SendInfoMessage(msg);
         }
 
-        public void SendErrorMessage(string msg)
+        public override void SendErrorMessage(string msg)
         {
             SrcInstance.SendErrorMessage(msg);
         }
 
-        public bool HasPermission(string permission)
+        public override bool HasPermission(string permission)
         {
             return SrcInstance.HasPermission(permission);
         }
 
-        public void Teleport(ICobaltPosition pos)
+        public override void Teleport(CobaltPosition pos)
         {
             var realPos = (TShockPosition) pos;
             SrcInstance.Teleport(realPos.X, realPos.Y);
         }
 
-        public void Teleport(ICobaltPlayer player)
+        public override void Teleport(CobaltPlayer player)
         {
             var realPos = (TShockPosition) player.Position;
             SrcInstance.Teleport(realPos.X, realPos.Y);
+        }
+
+        protected override Dictionary<object, object> GetPrintableVariables()
+        {
+            return new Dictionary<object, object>
+            {
+                {"name", DisplayName}
+            };
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Cobalt.Api.Command
             subCommands.Add(helpCommand);
         }
 
-        public override void OnCommand(ICobaltPlayer player, List<string> args)
+        public override void OnCommand(CobaltPlayer player, List<string> args)
         {
             if (args.Count == 0)
             {

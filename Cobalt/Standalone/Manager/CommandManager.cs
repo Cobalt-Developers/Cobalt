@@ -19,10 +19,10 @@ namespace Cobalt.Standalone.Manager
             }
         }
 
-        private Dictionary<string, Action<ICobaltPlayer, List<string>>> _commandActions =
-            new Dictionary<string, Action<ICobaltPlayer, List<string>>>();
+        private Dictionary<string, Action<CobaltPlayer, List<string>>> _commandActions =
+            new Dictionary<string, Action<CobaltPlayer, List<string>>>();
 
-        public static void RegisterCommand(string[] commands, Action<ICobaltPlayer, List<string>> action)
+        public static void RegisterCommand(string[] commands, Action<CobaltPlayer, List<string>> action)
         {
             if (commands == null) throw new ArgumentNullException(nameof(commands));
             foreach (var command in commands)
@@ -31,7 +31,7 @@ namespace Cobalt.Standalone.Manager
             }
         }
 
-        private void RegisterCommand(string command, Action<ICobaltPlayer, List<string>> action)
+        private void RegisterCommand(string command, Action<CobaltPlayer, List<string>> action)
         {
             if (_commandActions.ContainsKey(command))
             {
@@ -40,7 +40,7 @@ namespace Cobalt.Standalone.Manager
             _commandActions.Add(command, action);
         }
 
-        public bool TryExecuteCommand(ICobaltPlayer player, string command, List<string> args)
+        public bool TryExecuteCommand(CobaltPlayer player, string command, List<string> args)
         {
             if (!_commandActions.ContainsKey(command))
             {
@@ -50,7 +50,7 @@ namespace Cobalt.Standalone.Manager
             return true;
         }
         
-        public static bool HandleCommandMessage(ICobaltPlayer player, string chatMessage)
+        public static bool HandleCommandMessage(CobaltPlayer player, string chatMessage)
         {
             var parts = chatMessage.Substring(1).Split(' ');
             var command = parts[0];
@@ -59,7 +59,7 @@ namespace Cobalt.Standalone.Manager
             return Instance.TryExecuteCommand(player, command, args);
         }
         
-        public static bool HandleCommand(ICobaltPlayer player, string command, List<string> args)
+        public static bool HandleCommand(CobaltPlayer player, string command, List<string> args)
         {
             return Instance.TryExecuteCommand(player, command, args);
         }

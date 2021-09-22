@@ -18,7 +18,7 @@ namespace Cobalt.Api.Command.Argument
             Constraint = constraint;
         }
 
-        public bool TestArgumentOrError(ICobaltPlayer argsPlayer, string input)
+        public bool TestArgumentOrError(CobaltPlayer argsPlayer, string input)
         {
             if (Constraint == null || Constraint.IsSatisfied(input)) return true;
             argsPlayer.SendErrorMessage("Argument Constraint not satisfied:");

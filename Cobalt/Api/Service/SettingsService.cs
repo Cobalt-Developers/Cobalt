@@ -68,12 +68,12 @@ namespace Cobalt.Api.Service
             return GetSettingsManager<T>().GetOrCreateSettings(id);
         }
         
-        public SettingsFile<T> GetSettings<T>(ICobaltPlayer player)
+        public SettingsFile<T> GetSettings<T>(CobaltPlayer player)
         {
             return GetSettings<T>(player.DisplayName);
         }
         
-        public SettingsFile<T> GetOrCreateSettings<T>(ICobaltPlayer player)
+        public SettingsFile<T> GetOrCreateSettings<T>(CobaltPlayer player)
         {
             return GetOrCreateSettings<T>(player.DisplayName);
         }

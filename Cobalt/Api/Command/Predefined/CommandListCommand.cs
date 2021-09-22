@@ -14,7 +14,7 @@ namespace Cobalt.Api.Command.Predefined
         {
         }
 
-        public override void Execute(ICobaltPlayer player, List<string> args)
+        public override void Execute(CobaltPlayer player, List<string> args)
         {
             var color = Color.BlueViolet.packedValue;
             color = ((color & 0x000000FF) << 16) | (color & 0x0000FF00) | ((color & 0x00FF0000) >> 16);

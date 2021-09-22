@@ -13,12 +13,12 @@ namespace Cobalt.Api.Command.Predefined
         {
         }
 
-        public override void Execute(ICobaltPlayer player, List<string> args)
+        public override void Execute(CobaltPlayer player, List<string> args)
         {
             PrintFullHelp(player);
         }
         
-        private void PrintFullHelp(ICobaltPlayer argsPlayer)
+        private void PrintFullHelp(CobaltPlayer argsPlayer)
         {
             var header = GetHeader(Manager.GetBaseCommands()[0]);
             var content = GetHelpMessages(argsPlayer);
@@ -32,12 +32,12 @@ namespace Cobalt.Api.Command.Predefined
             return $"=====[ {label.First().ToString().ToUpper()+label.Substring(1).ToLower()} ]=====";
         }
 
-        private List<string> GetHelpMessages(ICobaltPlayer argsPlayer)
+        private List<string> GetHelpMessages(CobaltPlayer argsPlayer)
         {
             return GetCommands(argsPlayer).Select(c => $"{c.GetHelpMessage()} : {c.Description}").ToList();
         }
         
-        private List<AbstractCommand> GetCommands(ICobaltPlayer argsPlayer)
+        private List<AbstractCommand> GetCommands(CobaltPlayer argsPlayer)
         {
             var helpCommands = new List<AbstractCommand>(
                 Manager.GetCommands().Where(c => c.HasPermission(argsPlayer))

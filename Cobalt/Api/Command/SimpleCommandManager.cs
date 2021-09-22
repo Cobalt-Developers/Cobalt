@@ -18,7 +18,7 @@ namespace Cobalt.Api.Command
             this.command = command;
         }
         
-        public override void OnCommand(ICobaltPlayer player, List<string> args)
+        public override void OnCommand(CobaltPlayer player, List<string> args)
         {
             if (command.TryCommand(player, args)) return;
             

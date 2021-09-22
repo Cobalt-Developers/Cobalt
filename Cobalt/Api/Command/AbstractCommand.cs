@@ -55,9 +55,9 @@ namespace Cobalt.Api.Command
             }
         }
         
-        public abstract void Execute(ICobaltPlayer player, List<string> args);
+        public abstract void Execute(CobaltPlayer player, List<string> args);
 
-        public bool TryCommand(ICobaltPlayer player, List<string> args)
+        public bool TryCommand(CobaltPlayer player, List<string> args)
         {
             if (!HasMatchingSubcommands(args))
                 return false;
@@ -67,7 +67,7 @@ namespace Cobalt.Api.Command
             PreExecute(player, realArguments);
             return true;
         }
-        public void PreExecute(ICobaltPlayer player, List<string> args)
+        public void PreExecute(CobaltPlayer player, List<string> args)
         {
             if (isIngameCommandOnly)
             {
@@ -100,7 +100,7 @@ namespace Cobalt.Api.Command
             }
         }
         
-        public bool HasPermission(ICobaltPlayer player)
+        public bool HasPermission(CobaltPlayer player)
         {
             return GetPermissions().Count == 0 || permissions.All(player.HasPermission);
         }
@@ -119,7 +119,7 @@ namespace Cobalt.Api.Command
                 .Any(n => n.Equals(args[i], StringComparison.OrdinalIgnoreCase))).Any();
         }
 
-        private bool TestArgumentConditions(ICobaltPlayer argsPlayer, List<string> args)
+        private bool TestArgumentConditions(CobaltPlayer argsPlayer, List<string> args)
         {
             var relevantArgs = args.GetRange(0, Math.Min(args.Count, arguments.Count));
             return !relevantArgs.Where((arg, i) => !arguments[i].TestArgumentOrError(argsPlayer, arg)).Any();

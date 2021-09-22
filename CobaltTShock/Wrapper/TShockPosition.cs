@@ -1,18 +1,26 @@
-﻿using Cobalt.Api.Wrapper;
+﻿using System.Collections.Generic;
+using Cobalt.Api.Wrapper;
 
 namespace CobaltTShock.Wrapper
 {
-    public class TShockPosition : ICobaltPosition
+    public class TShockPosition : CobaltPosition
     {
         public float X { get; }
         public float Y { get; }
-
-        public string ToPrettyString => $"[ x:{X} | y:{Y} ]";
         
         public TShockPosition(float x, float y)
         {
             X = x;
             Y = y;
+        }
+        
+        protected override Dictionary<object, object> GetPrintableVariables()
+        {
+            return new Dictionary<object, object>
+            {
+                {"x", X},
+                {"y", Y}
+            };
         }
     }
 }
